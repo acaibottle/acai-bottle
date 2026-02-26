@@ -236,32 +236,32 @@ button {
         <select id="bairro" onchange="atualizarFrete()">
     <option value="">Selecione o bairro</option>
 
-    <option value="3">Cidade Nova / Dom Luciano</option>
-    <option value="3">Japãozinho</option>
-    <option value="3">18 do Forte</option>
-    <option value="3">Santos Dumont</option>
+    <option value="3" data-bairro="Cidade Nova / Dom Luciano">Cidade Nova / Dom Luciano</option>
+    <option value="3" data-bairro="Japãozinho">Japãozinho</option>
+    <option value="3" data-bairro="18 do Forte">18 do Forte</option>
+    <option value="3" data-bairro="Santos Dumont">Santos Dumont</option>
 
-    <option value="4">Santo Antônio</option>
-    <option value="4">Bugio</option>
-    <option value="4">Soledade</option>
+    <option value="4" data-bairro="Santo Antônio">Santo Antônio</option>
+    <option value="4" data-bairro="Bugio">Bugio</option>
+    <option value="4" data-bairro="Soledade">Soledade</option>
 
-    <option value="5">Bairro Industrial</option>
-    <option value="5">Porto Dantas</option>
-    <option value="5">Centro</option>
-    <option value="5">América</option>
+    <option value="5" data-bairro="Bairro Industrial">Bairro Industrial</option>
+    <option value="5" data-bairro="Porto Dantas">Porto Dantas</option>
+    <option value="5" data-bairro="Centro">Centro</option>
+    <option value="5" data-bairro="América">América</option>
 
-    <option value="6">São José</option>
-    <option value="7">Jardins</option>
+    <option value="6" data-bairro="São José">São José</option>
+    <option value="7" data-bairro="Jardins">Jardins</option>
 
     <option disabled>────────────</option>
 
-    <option value="6">João Alves</option>
-    <option value="8">Fernando Collor</option>
-    <option value="7">Marcos Freire I</option>
-    <option value="6">Marcos Freire II</option>
-    <option value="10">Piabeta</option>
-    <option value="10">Albano Franco</option>
-    <option value="10">Novo Horizonte</option>
+    <option value="6" data-bairro="João Alves">João Alves</option>
+    <option value="8" data-bairro="Fernando Collor">Fernando Collor</option>
+    <option value="7" data-bairro="Marcos Freire I">Marcos Freire I</option>
+    <option value="6" data-bairro="Marcos Freire II">Marcos Freire II</option>
+    <option value="10" data-bairro="Piabeta">Piabeta</option>
+    <option value="10" data-bairro="Albano Franco">Albano Franco</option>
+    <option value="10" data-bairro="Novo Horizonte">Novo Horizonte</option>
 </select>
 </div>
         
@@ -291,10 +291,14 @@ button {
 let carrinho = [];
 let totalProdutos = 0;
 let frete = 0;
+let bairroSelecionado = "";
 
 function atualizarFrete() {
-    const bairroSelect = document.getElementById("bairro");
-    frete = Number(bairroSelect.value) || 0;
+    const select = document.getElementById("bairro");
+    const option = select.options[select.selectedIndex];
+
+    frete = Number(option.value) || 0;
+    bairroSelecionado = option.getAttribute("data-bairro") || "";
 
     document.getElementById("frete").innerText = frete.toFixed(2);
     document.getElementById("total").innerText = (totalProdutos + frete).toFixed(2);
@@ -367,6 +371,11 @@ function mostrarConfirmacao() {
     const pagamento = document.getElementById("pagamento").value;
     const endereco = document.getElementById("enderecoCliente").value;
 
+     if (!bairroSelecionado) {
+    alert("Selecione o bairro para calcular o frete.");
+    return;
+}
+     
     if (carrinho.length === 0) {
         alert("Seu carrinho está vazio.");
         return;
@@ -389,7 +398,8 @@ function mostrarConfirmacao() {
         mensagem += `• ${item.nome} - R$ ${item.preco.toFixed(2)}\n`;
     });
 
-    mensagem += `\n🚚 Taxa de entrega: R$ ${frete.toFixed(2)}`;
+  mensagem += `\n📍 Bairro: ${bairroSelecionado}`;
+mensagem += `\n🚚 Taxa de entrega: R$ ${frete.toFixed(2)}`;
     mensagem += `\n💰 Total: R$ ${totalFinal.toFixed(2)}\n\n`;
 
     const mapsLink = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(endereco)}`;
@@ -408,6 +418,7 @@ function mostrarConfirmacao() {
     // JS aqui
 </script>
 </html>
+
 
 
 
