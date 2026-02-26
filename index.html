@@ -214,12 +214,9 @@ button {
             <option value="Dinheiro">Dinheiro</option>
             <option value="Cartão">Cartão</option>
         </select>
-    </div>
-</div>
-
-<div class="finalizar">
+        <div class="finalizar">
     <button onclick="enviarPedido()">📲 Enviar pedido no WhatsApp</button>
-</div>
+    </div>
 
 <script>
 let carrinho = [];
@@ -275,41 +272,46 @@ function mostrarConfirmacao() {
     msg.style.display = "block";
     setTimeout(() => msg.style.display = "none", 1500);
 }
+    
 function enviarPedido() {
+
     const nome = document.getElementById("nomeCliente").value;
     const pagamento = document.getElementById("pagamento").value;
 
-    if (!nome || !pagamento) {
-        alert("Preencha seu nome e escolha a forma de pagamento.");
-        return;
-    }
-
     if (carrinho.length === 0) {
-        alert("Seu carrinho está vazio!");
+        alert("Seu carrinho está vazio.");
         return;
     }
 
-    let mensagem = "🛒 Pedido Açaí Bottle\n\n";
-    mensagem += `Nome: ${nome}\n`;
-    mensagem += `Pagamento: ${pagamento}\n\n`;
+    if (!nome || !pagamento) {
+        alert("Preencha seu nome e a forma de pagamento.");
+        return;
+    }
+
+    let mensagem = `🟣 *Pedido - Açaí Bottle* 🟣\n\n`;
+    mensagem += `👤 Cliente: ${nome}\n`;
+    mensagem += `💳 Pagamento: ${pagamento}\n\n`;
+    mensagem += `🛒 Itens:\n`;
 
     carrinho.forEach(item => {
-        mensagem += `• ${item.nome} (300 ml)\n`;
+        mensagem += `• ${item.nome} - R$ ${item.preco.toFixed(2)}\n`;
     });
 
-    mensagem += `\nTotal: R$ ${total.toFixed(2)}`;
+    mensagem += `\n💰 Total: R$ ${total.toFixed(2)}`;
 
-    const telefone = "5579996090459";
-    const url = "https://wa.me/" + telefone + "?text=" + encodeURIComponent(mensagem);
+    const numeroLoja = "5579996090459"; // SEU WHATSAPP
+    const url = `https://wa.me/${numeroLoja}?text=${encodeURIComponent(mensagem)}`;
 
-    enviarParaPlanilha(nome, pagamento);
     window.open(url, "_blank");
 }
 
 </script>
 
+<!-- HTML -->
 </body>
-
+<script>
+    // JS aqui
+</script>
 </html>
 
 
