@@ -198,22 +198,25 @@ button {
     <h3>🛒 Seu carrinho</h3>
 
     <ul id="lista-carrinho"></ul>
-
+        
+    <div class="frete">
+    Frete: R$ <span id="frete">0.00</span>
+</div>
+        
     <div class="total">
         Total: R$ <span id="total">0.00</span>
     </div>
-        <div class="frete">
-    Frete: R$ <span id="frete">0.00</span>
-</div>
-
-<div class="total-final">
-    Total com frete: R$ <span id="totalFinal">0.00</span>
-</div>
-
+   
+        
     <!-- DADOS DO CLIENTE -->
     <div class="dados-cliente">
         <h4>🧾 Dados do pedido</h4>
-
+<input 
+    type="text" 
+    id="enderecoCliente" 
+    placeholder="Endereço de entrega"
+    onblur="calcularFretePorEndereco()"
+>
         <input type="text" id="nomeCliente" placeholder="Seu nome">
 
         <select id="pagamento">
@@ -223,11 +226,6 @@ button {
             <option value="Dinheiro">Dinheiro</option>
             <option value="Cartão">Cartão</option>
         </select>
-                    <input 
-    type="text" 
-    id="enderecoCliente" 
-    placeholder="Endereço de entrega (Rua, Bairro)"
->
         <div class="finalizar">
     <button onclick="enviarPedido()">📲 Enviar pedido no WhatsApp</button>
     </div>
@@ -235,7 +233,8 @@ button {
 <script>
 let carrinho = [];
 let total = 0;
-
+let taxaEntrega = 0;
+    
         const valorPorKm = 2; // valor médio por KM
 const distanciaMediaKm = 5; // distância padrão
 
@@ -279,27 +278,33 @@ function atualizarCarrinho() {
     totalSpan.innerText = total.toFixed(2);
     atualizarTotalComFrete();
 }
+    function calcularFretePorEndereco() {
+    const endereco = document.getElementById("enderecoCliente").value;
+
+    if (!endereco) {
+        taxaEntrega = 0;
+        atualizarTotalComFrete();
+        return;
+    }
+
+    // 🔹 Regra simples (pode evoluir depois)
+    taxaEntrega = valorPorKm * distanciaMediaKm;
+
+    atualizarTotalComFrete();
+}
 function atualizarTotalComFrete() {
-    const taxaEntrega = calcularTaxaEntrega();
     const totalComFrete = total + taxaEntrega;
 
     document.getElementById("frete").innerText = taxaEntrega.toFixed(2);
     document.getElementById("totalFinal").innerText = totalComFrete.toFixed(2);
 }
-   
 function mostrarConfirmacao() {
     const msg = document.getElementById("confirmacao");
     msg.style.display = "block";
     setTimeout(() => msg.style.display = "none", 1500);
 }
 
-    function atualizarTotalComFrete() {
-    const taxaEntrega = calcularTaxaEntrega();
-    const totalComFrete = total + taxaEntrega;
 
-    document.getElementById("frete").innerText = taxaEntrega.toFixed(2);
-    document.getElementById("totalFinal").innerText = totalComFrete.toFixed(2);
-}
   function enviarPedido() {
 
     const nome = document.getElementById("nomeCliente").value;
@@ -349,6 +354,7 @@ function mostrarConfirmacao() {
     // JS aqui
 </script>
 </html>
+
 
 
 
