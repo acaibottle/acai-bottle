@@ -232,37 +232,30 @@ button {
 
 <script>
 let carrinho = [];
-let total = 0;
-let taxaEntrega = 0;
-    
-        const valorPorKm = 2; // valor médio por KM
-const distanciaMediaKm = 5; // distância padrão
+let totalProdutos = 0;
+let frete = 0;
 
+const valorPorKm = 2;
+const distanciaMediaKm = 5;
+    
         function calcularTaxaEntrega() {
     return valorPorKm * distanciaMediaKm;
 }
     
-function adicionar(nome, preco) {
+function adicionarAoCarrinho(nome, preco) {
     carrinho.push({ nome, preco });
-    total += preco;
+    totalProdutos += preco;
     atualizarCarrinho();
-    mostrarConfirmacao();
 }
 
-function remover(index) {
-    total -= carrinho[index].preco;
-    carrinho.splice(index, 1);
-    atualizarCarrinho();
-}
-    function removerItem(index) {
-    total -= carrinho[index].preco;
+function removerItem(index) {
+    totalProdutos -= carrinho[index].preco;
     carrinho.splice(index, 1);
     atualizarCarrinho();
 }
 
 function atualizarCarrinho() {
     const lista = document.getElementById("lista-carrinho");
-    const totalSpan = document.getElementById("total");
 
     lista.innerHTML = "";
 
@@ -275,29 +268,29 @@ function atualizarCarrinho() {
         lista.appendChild(li);
     });
 
-    totalSpan.innerText = total.toFixed(2);
-    atualizarTotalComFrete();
+    document.getElementById("total").innerText = totalProdutos.toFixed(2);
+
+    atualizarTotais();
 }
-    function calcularFretePorEndereco() {
+ function calcularFretePorEndereco() {
     const endereco = document.getElementById("enderecoCliente").value;
 
-    if (!endereco) {
-        taxaEntrega = 0;
-        atualizarTotalComFrete();
-        return;
+    if (!endereco || endereco.length < 5) {
+        frete = 0;
+    } else {
+        frete = valorPorKm * distanciaMediaKm;
     }
 
-    // 🔹 Regra simples (pode evoluir depois)
-    taxaEntrega = valorPorKm * distanciaMediaKm;
-
-    atualizarTotalComFrete();
+    atualizarTotais();
 }
-function atualizarTotalComFrete() {
-    const totalComFrete = total + taxaEntrega;
+    
+function atualizarTotais() {
+    const totalFinal = totalProdutos + frete;
 
-    document.getElementById("frete").innerText = taxaEntrega.toFixed(2);
-    document.getElementById("totalFinal").innerText = totalComFrete.toFixed(2);
+    document.getElementById("frete").innerText = frete.toFixed(2);
+    document.getElementById("totalFinal").innerText = totalFinal.toFixed(2);
 }
+    
 function mostrarConfirmacao() {
     const msg = document.getElementById("confirmacao");
     msg.style.display = "block";
@@ -322,8 +315,8 @@ function mostrarConfirmacao() {
     }
 
     const taxaEntrega = calcularTaxaEntrega();
-    const totalFinal = total + taxaEntrega;
-
+const totalFinal = totalProdutos + frete;
+      
     let mensagem = `🟣 *Pedido - Açaí Bottle* 🟣\n\n`;
     mensagem += `👤 Cliente: ${nome}\n`;
     mensagem += `📍 Endereço: ${endereco}\n`;
@@ -354,6 +347,7 @@ function mostrarConfirmacao() {
     // JS aqui
 </script>
 </html>
+
 
 
 
