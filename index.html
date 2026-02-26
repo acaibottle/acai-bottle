@@ -296,7 +296,7 @@ function mostrarConfirmacao() {
     }, 1500);
 }
 
-  function enviarPedido() {
+ function enviarPedido() {
 
     const nome = document.getElementById("nomeCliente").value;
     const pagamento = document.getElementById("pagamento").value;
@@ -312,12 +312,8 @@ function mostrarConfirmacao() {
         return;
     }
 
-    const taxaEntrega = calcularTaxaEntrega();
-const totalFinal = totalProdutos + frete;
+    const totalFinal = totalProdutos + frete;
 
-document.getElementById("frete").innerText = frete.toFixed(2);
-total.innerText = totalFinal.toFixed(2);
-      
     let mensagem = `🟣 *Pedido - Açaí Bottle* 🟣\n\n`;
     mensagem += `👤 Cliente: ${nome}\n`;
     mensagem += `📍 Endereço: ${endereco}\n`;
@@ -328,7 +324,7 @@ total.innerText = totalFinal.toFixed(2);
         mensagem += `• ${item.nome} - R$ ${item.preco.toFixed(2)}\n`;
     });
 
-    mensagem += `\n🚚 Taxa de entrega: R$ ${taxaEntrega.toFixed(2)}`;
+    mensagem += `\n🚚 Taxa de entrega: R$ ${frete.toFixed(2)}`;
     mensagem += `\n💰 Total: R$ ${totalFinal.toFixed(2)}\n\n`;
 
     const mapsLink = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(endereco)}`;
@@ -339,7 +335,6 @@ total.innerText = totalFinal.toFixed(2);
 
     window.open(url, "_blank");
 }
- 
 </script>
 
 <!-- HTML -->
@@ -348,5 +343,6 @@ total.innerText = totalFinal.toFixed(2);
     // JS aqui
 </script>
 </html>
+
 
 
