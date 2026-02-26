@@ -202,6 +202,13 @@ button {
     <div class="total">
         Total: R$ <span id="total">0.00</span>
     </div>
+        <div class="frete">
+    Frete: R$ <span id="frete">0.00</span>
+</div>
+
+<div class="total-final">
+    Total com frete: R$ <span id="totalFinal">0.00</span>
+</div>
 
     <!-- DADOS DO CLIENTE -->
     <div class="dados-cliente">
@@ -263,8 +270,15 @@ function atualizarCarrinho() {
     });
 
     totalSpan.innerText = total.toFixed(2);
+    atualizarTotalComFrete();
 }
+function atualizarTotalComFrete() {
+    const taxaEntrega = calcularTaxaEntrega();
+    const totalComFrete = total + taxaEntrega;
 
+    document.getElementById("frete").innerText = taxaEntrega.toFixed(2);
+    document.getElementById("totalFinal").innerText = totalComFrete.toFixed(2);
+}
    
 function mostrarConfirmacao() {
     const msg = document.getElementById("confirmacao");
@@ -277,6 +291,13 @@ function mostrarConfirmacao() {
     const valorPorKm = 2; // valor médio por KM
 const distanciaMediaKm = 5; // distância padrão
 
+    function atualizarTotalComFrete() {
+    const taxaEntrega = calcularTaxaEntrega();
+    const totalComFrete = total + taxaEntrega;
+
+    document.getElementById("frete").innerText = taxaEntrega.toFixed(2);
+    document.getElementById("totalFinal").innerText = totalComFrete.toFixed(2);
+}
   function enviarPedido() {
 
     const nome = document.getElementById("nomeCliente").value;
@@ -326,6 +347,7 @@ const distanciaMediaKm = 5; // distância padrão
     // JS aqui
 </script>
 </html>
+
 
 
 
