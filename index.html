@@ -294,22 +294,22 @@ let frete = 0;
 let bairroSelecionado = "";
 
 function atualizarFrete() {
+
     const select = document.getElementById("bairro");
-    const option = select.options[select.selectedIndex];
 
-    frete = Number(option.value) || 0;
-    bairroSelecionado = option.getAttribute("data-bairro") || "";
-
-    let freteFinal = frete;
-
-    // FRETE GRÁTIS ACIMA DE 55
-    if (totalProdutos >= 55) {
-        freteFinal = 0;
+    if (select.selectedIndex > 0) {
+        const option = select.options[select.selectedIndex];
+        frete = Number(option.value);
+        bairroSelecionado = option.getAttribute("data-bairro");
     }
 
+    let freteFinal = totalProdutos >= 55 ? 0 : frete;
+    let totalFinal = totalProdutos + freteFinal;
+
     document.getElementById("frete").innerText = freteFinal.toFixed(2);
-    document.getElementById("total").innerText = (totalProdutos + freteFinal).toFixed(2);
+    document.getElementById("total").innerText = totalFinal.toFixed(2);
 }
+
 function adicionarAoCarrinho(nome, preco) {
     carrinho.push({ nome, preco });
     totalProdutos += preco;
@@ -326,8 +326,11 @@ function removerItem(index) {
 function adicionarAoCarrinho(nome, preco) {
     carrinho.push({ nome, preco });
     totalProdutos += preco;
+
     atualizarCarrinho();
+    mostrarConfirmacao();
 }
+
     function calcularTotalFinal() {
     let freteFinal = totalProdutos >= 55 ? 0 : frete;
     return totalProdutos + freteFinal;
@@ -335,26 +338,20 @@ function adicionarAoCarrinho(nome, preco) {
 
 function atualizarCarrinho() {
     const lista = document.getElementById("lista-carrinho");
-    const total = document.getElementById("total");
-
     lista.innerHTML = "";
 
     carrinho.forEach((item, index) => {
         const li = document.createElement("li");
         li.innerHTML = `
             ${item.nome} - R$ ${item.preco.toFixed(2)}
-            <button class="btn-remover" onclick="removerItem(${index})">×</button>
+            <button class="btn-remover" onclick="removerItem(${index})">x</button>
         `;
         lista.appendChild(li);
     });
 
-    const totalFinal = totalProdutos + frete;
-    // Recalcular frete sempre que adicionar ou remover item
-atualizarFrete();
-
-    document.getElementById("frete").innerText = frete.toFixed(2);
-    total.innerText = totalFinal.toFixed(2);
+    atualizarFrete(); // recalcula sempre
 }
+
 
 function atualizarTotais() {
     const totalFinal = totalProdutos + frete;
@@ -372,41 +369,43 @@ function mostrarConfirmacao() {
     }, 1500);
 }
 
- function enviarPedido() {
+function enviarPedido() {
 
     const nome = document.getElementById("nomeCliente").value;
     const pagamento = document.getElementById("pagamento").value;
     const endereco = document.getElementById("enderecoCliente").value;
 
-     if (!bairroSelecionado) {
-    alert("Selecione o bairro para calcular o frete.");
-    return;
-}
-     
     if (carrinho.length === 0) {
         alert("Seu carrinho está vazio.");
         return;
     }
 
-    if (!nome || !pagamento || !endereco) {
-        alert("Preencha nome, pagamento e endereço.");
+    if (!nome || !pagamento || !endereco || !bairroSelecionado) {
+        alert("Preencha todos os dados e selecione o bairro.");
         return;
     }
 
-    const totalFinal = totalProdutos + frete;
+    let freteFinal = totalProdutos >= 55 ? 0 : frete;
+    let totalFinal = totalProdutos + freteFinal;
 
     let mensagem = `🟣 *Pedido - Açaí Bottle* 🟣\n\n`;
     mensagem += `👤 Cliente: ${nome}\n`;
     mensagem += `📍 Endereço: ${endereco}\n`;
+    mensagem += `📌 Bairro: ${bairroSelecionado}\n`;
     mensagem += `💳 Pagamento: ${pagamento}\n\n`;
 
     mensagem += `🛒 Itens:\n`;
+
     carrinho.forEach(item => {
         mensagem += `• ${item.nome} - R$ ${item.preco.toFixed(2)}\n`;
     });
 
-  mensagem += `\n📍 Bairro: ${bairroSelecionado}`;
-mensagem += `\n🚚 Taxa de entrega: R$ ${frete.toFixed(2)}`;
+    if (freteFinal === 0 && totalProdutos >= 55) {
+        mensagem += `\n🚚 Frete: GRÁTIS 🎉`;
+    } else {
+        mensagem += `\n🚚 Taxa de entrega: R$ ${freteFinal.toFixed(2)}`;
+    }
+
     mensagem += `\n💰 Total: R$ ${totalFinal.toFixed(2)}\n\n`;
 
     const mapsLink = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(endereco)}`;
@@ -417,6 +416,7 @@ mensagem += `\n🚚 Taxa de entrega: R$ ${frete.toFixed(2)}`;
 
     window.open(url, "_blank");
 }
+
 </script>
 
 <!-- HTML -->
@@ -425,6 +425,7 @@ mensagem += `\n🚚 Taxa de entrega: R$ ${frete.toFixed(2)}`;
     // JS aqui
 </script>
 </html>
+
 
 
 
