@@ -187,10 +187,14 @@ button {
     <button onclick="enviarWhats()">Enviar Pedido no WhatsApp</button>
 </section>
 
+...
+
 <div class="carrinho">
     <h3>🛒 Seu carrinho</h3>
     <ul id="lista-carrinho"></ul>
-    <p><strong>Total: R$ <span id="total">0.00</span></strong></p>
+    <div class="total">
+        Total: R$ <span id="total">0.00</span>
+    </div>
 </div>
 
 <script>
@@ -200,7 +204,6 @@ let total = 0;
 function adicionar(nome, preco) {
     carrinho.push({ nome, preco });
     total += preco;
-
     atualizarCarrinho();
     mostrarConfirmacao();
 }
@@ -218,8 +221,8 @@ function atualizarCarrinho() {
     carrinho.forEach((item, index) => {
         lista.innerHTML += `
             <li>
-                ${item.nome} - R$ ${item.preco.toFixed(2)}
-                <button onclick="remover(${index})">❌</button>
+                <span>${item.nome} - R$ ${item.preco.toFixed(2)}</span>
+                <button class="btn-remover" onclick="remover(${index})">✕</button>
             </li>
         `;
     });
@@ -230,13 +233,9 @@ function atualizarCarrinho() {
 function mostrarConfirmacao() {
     const msg = document.getElementById("confirmacao");
     msg.style.display = "block";
-
-    setTimeout(() => {
-        msg.style.display = "none";
-    }, 1500);
+    setTimeout(() => msg.style.display = "none", 1500);
 }
 </script>
-<div id="confirmacao">✔ Item adicionado ao carrinho</div>
 
 </body>
 </html>
