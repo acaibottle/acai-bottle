@@ -300,10 +300,16 @@ function atualizarFrete() {
     frete = Number(option.value) || 0;
     bairroSelecionado = option.getAttribute("data-bairro") || "";
 
-    document.getElementById("frete").innerText = frete.toFixed(2);
-    document.getElementById("total").innerText = (totalProdutos + frete).toFixed(2);
-}
+    let freteFinal = frete;
 
+    // FRETE GRÁTIS ACIMA DE 55
+    if (totalProdutos >= 55) {
+        freteFinal = 0;
+    }
+
+    document.getElementById("frete").innerText = freteFinal.toFixed(2);
+    document.getElementById("total").innerText = (totalProdutos + freteFinal).toFixed(2);
+}
 function adicionarAoCarrinho(nome, preco) {
     carrinho.push({ nome, preco });
     totalProdutos += preco;
@@ -322,6 +328,10 @@ function adicionarAoCarrinho(nome, preco) {
     totalProdutos += preco;
     atualizarCarrinho();
 }
+    function calcularTotalFinal() {
+    let freteFinal = totalProdutos >= 55 ? 0 : frete;
+    return totalProdutos + freteFinal;
+}
 
 function atualizarCarrinho() {
     const lista = document.getElementById("lista-carrinho");
@@ -339,6 +349,8 @@ function atualizarCarrinho() {
     });
 
     const totalFinal = totalProdutos + frete;
+    // Recalcular frete sempre que adicionar ou remover item
+atualizarFrete();
 
     document.getElementById("frete").innerText = frete.toFixed(2);
     total.innerText = totalFinal.toFixed(2);
@@ -413,6 +425,7 @@ mensagem += `\n🚚 Taxa de entrega: R$ ${frete.toFixed(2)}`;
     // JS aqui
 </script>
 </html>
+
 
 
 
