@@ -246,24 +246,30 @@ function removerItem(index) {
     atualizarCarrinho();
 }
 
+let carrinho = [];
+let totalProdutos = 0;
+
+function adicionarAoCarrinho(nome, preco) {
+    carrinho.push({ nome, preco });
+    totalProdutos += preco;
+    atualizarCarrinho();
+}
+
 function atualizarCarrinho() {
     const lista = document.getElementById("lista-carrinho");
+    const total = document.getElementById("total");
 
     lista.innerHTML = "";
 
-    carrinho.forEach((item, index) => {
+    carrinho.forEach(item => {
         const li = document.createElement("li");
-        li.innerHTML = `
-            ${item.nome} - R$ ${item.preco.toFixed(2)}
-            <button class="btn-remover" onclick="removerItem(${index})">x</button>
-        `;
+        li.innerText = `${item.nome} - R$ ${item.preco.toFixed(2)}`;
         lista.appendChild(li);
     });
 
-    document.getElementById("total").innerText = totalProdutos.toFixed(2);
-
-    atualizarTotais();
+    total.innerText = totalProdutos.toFixed(2);
 }
+    
  function calcularFretePorEndereco() {
     const endereco = document.getElementById("enderecoCliente").value;
 
@@ -272,8 +278,6 @@ function atualizarCarrinho() {
     } else {
         frete = valorPorKm * distanciaMediaKm;
     }
-
-    atualizarTotais();
 }
     
 function atualizarTotais() {
@@ -339,6 +343,7 @@ const totalFinal = totalProdutos + frete;
     // JS aqui
 </script>
 </html>
+
 
 
 
