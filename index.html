@@ -193,7 +193,7 @@ button {
     <p class="preco">R$ 16,50</p>
     <button onclick="adicionarAoCarrinho('Nutella',16.5)">Adicionar</button>
 </div>
-
+<div id="confirmacao">✔ Item adicionado ao carrinho</div>
     <div class="carrinho">
     <h3>🛒 Seu carrinho</h3>
 
@@ -233,11 +233,13 @@ button {
 <script>
 let carrinho = [];
 let totalProdutos = 0;
+let frete = 5;
 
 function adicionarAoCarrinho(nome, preco) {
     carrinho.push({ nome, preco });
     totalProdutos += preco;
     atualizarCarrinho();
+    mostrarConfirmacao();
 }
 
 function removerItem(index) {
@@ -258,24 +260,23 @@ function atualizarCarrinho() {
 
     lista.innerHTML = "";
 
-    carrinho.forEach(item => {
+    carrinho.forEach((item, index) => {
         const li = document.createElement("li");
-        li.innerText = `${item.nome} - R$ ${item.preco.toFixed(2)}`;
+        li.innerHTML = `
+            ${item.nome} - R$ ${item.preco.toFixed(2)}
+            <button class="btn-remover" onclick="removerItem(${index})">×</button>
+        `;
         lista.appendChild(li);
     });
 
-    total.innerText = totalProdutos.toFixed(2);
+    const totalFinal = totalProdutos + frete;
+
+    document.getElementById("frete").innerText = frete.toFixed(2);
+    total.innerText = totalFinal.toFixed(2);
 }
     
 function calcularFretePorEndereco() {
-    const endereco = document.getElementById("enderecoCliente").value;
-
-    if (!endereco || endereco.length < 5) {
-        frete = 0;
-    } else {
-        frete = 5; // frete fixo por enquanto
-    }
-
+    frete = 5;
     atualizarCarrinho();
 }
     
@@ -289,9 +290,11 @@ function atualizarTotais() {
 function mostrarConfirmacao() {
     const msg = document.getElementById("confirmacao");
     msg.style.display = "block";
-    setTimeout(() => msg.style.display = "none", 1500);
-}
 
+    setTimeout(() => {
+        msg.style.display = "none";
+    }, 1500);
+}
 
   function enviarPedido() {
 
@@ -345,4 +348,5 @@ total.innerText = totalFinal.toFixed(2);
     // JS aqui
 </script>
 </html>
+
 
