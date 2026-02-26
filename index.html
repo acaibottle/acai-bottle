@@ -288,23 +288,7 @@ function enviarPedido() {
 
     window.open(url, "_blank");
 }
- function enviarParaPlanilha(nome, pagamento) {
-    const dados = {
-        produto: carrinho.map(i => i.nome).join(", "),
-        pagamento: pagamento,
-        valor: total.toFixed(2),
-        cliente: nome
-    };
-
-    fetch(https://script.google.com/macros/s/AKfycby3BwTKSNfaiTAswSDB4Y_BwXikz3CcETjAP3JzD4scUce7pWfP__XcnRHWY1R0OfPV/exec, {
-        method: "POST",
-        body: JSON.stringify(dados),
-        headers: {
-            "Content-Type": "application/json"
-        }
-    });
-}
-
+ 
 </script>
 
 <!-- HTML -->
@@ -313,6 +297,7 @@ function enviarPedido() {
     // JS aqui
 </script>
 </html>
+
 
 
 
