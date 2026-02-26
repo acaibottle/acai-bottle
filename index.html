@@ -210,6 +210,11 @@ button {
         <input type="text" id="nomeCliente" placeholder="Seu nome">
 
         <select id="pagamento">
+            <input 
+    type="text" 
+    id="enderecoCliente" 
+    placeholder="Endereço de entrega (Rua, Bairro)"
+>
             <option value="">Forma de pagamento</option>
             <option value="Pix">Pix</option>
             <option value="Dinheiro">Dinheiro</option>
@@ -265,34 +270,48 @@ function mostrarConfirmacao() {
     msg.style.display = "block";
     setTimeout(() => msg.style.display = "none", 1500);
 }
-    
-function enviarPedido() {
+    function calcularTaxaEntrega() {
+    return valorPorKm * distanciaMediaKm;
+}
+    const valorPorKm = 2; // valor médio por KM
+const distanciaMediaKm = 5; // distância padrão
+
+  function enviarPedido() {
 
     const nome = document.getElementById("nomeCliente").value;
     const pagamento = document.getElementById("pagamento").value;
+    const endereco = document.getElementById("enderecoCliente").value;
 
     if (carrinho.length === 0) {
         alert("Seu carrinho está vazio.");
         return;
     }
 
-    if (!nome || !pagamento) {
-        alert("Preencha seu nome e a forma de pagamento.");
+    if (!nome || !pagamento || !endereco) {
+        alert("Preencha nome, pagamento e endereço.");
         return;
     }
 
+    const taxaEntrega = calcularTaxaEntrega();
+    const totalFinal = total + taxaEntrega;
+
     let mensagem = `🟣 *Pedido - Açaí Bottle* 🟣\n\n`;
     mensagem += `👤 Cliente: ${nome}\n`;
+    mensagem += `📍 Endereço: ${endereco}\n`;
     mensagem += `💳 Pagamento: ${pagamento}\n\n`;
-    mensagem += `🛒 Itens:\n`;
 
+    mensagem += `🛒 Itens:\n`;
     carrinho.forEach(item => {
         mensagem += `• ${item.nome} - R$ ${item.preco.toFixed(2)}\n`;
     });
 
-    mensagem += `\n💰 Total: R$ ${total.toFixed(2)}`;
+    mensagem += `\n🚚 Taxa de entrega: R$ ${taxaEntrega.toFixed(2)}`;
+    mensagem += `\n💰 Total: R$ ${totalFinal.toFixed(2)}\n\n`;
 
-    const numeroLoja = "5579996090459"; // SEU WHATSAPP
+    const mapsLink = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(endereco)}`;
+    mensagem += `🗺️ Localização: ${mapsLink}`;
+
+    const numeroLoja = "5579996090459";
     const url = `https://wa.me/${numeroLoja}?text=${encodeURIComponent(mensagem)}`;
 
     window.open(url, "_blank");
@@ -306,6 +325,7 @@ function enviarPedido() {
     // JS aqui
 </script>
 </html>
+
 
 
 
