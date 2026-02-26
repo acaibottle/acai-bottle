@@ -158,7 +158,7 @@ button {
     <h3>Tradicional</h3>
     <p class="descricao">O clássico que nunca erra.</p>
     <p class="preco">R$ 12,00</p>
-    <button onclick="adicionaraocarrinho('Tradicional',12)">Adicionar</button>
+    <button onclick="adicionarAoCarrinho('Tradicional',12)">Adicionar</button>
 </div>
 
     <div class="produto">
@@ -169,7 +169,7 @@ button {
         Suave, doce e irresistível.
     </p>
     <p class="preco">R$ 14,00</p>
-    <button onclick="adicionaraocarrinho('Ninho',14)">Adicionar</button>
+    <button onclick="adicionarAoCarrinho('Ninho',14)">Adicionar</button>
 </div>
 
 <div class="produto">
@@ -180,7 +180,7 @@ button {
         Equilíbrio perfeito entre doce e azedinho.
     </p>
     <p class="preco">R$ 14,00</p>
-    <button onclick="adicionaraocarrinho('Maracujá',14)">Adicionar</button>
+    <button onclick="adicionarAoCarrinho('Maracujá',14)">Adicionar</button>
 </div>
 
 <div class="produto">
@@ -191,7 +191,7 @@ button {
         Cremoso, intenso e irresistível.
     </p>
     <p class="preco">R$ 16,50</p>
-    <button onclick="adicionaraocarrinho('Nutella',16.5)">Adicionar</button>
+    <button onclick="adicionarAoCarrinho('Nutella',16.5)">Adicionar</button>
 </div>
 
     <div class="carrinho">
@@ -246,9 +246,6 @@ function removerItem(index) {
     atualizarCarrinho();
 }
 
-let carrinho = [];
-let totalProdutos = 0;
-
 function adicionarAoCarrinho(nome, preco) {
     carrinho.push({ nome, preco });
     totalProdutos += preco;
@@ -270,21 +267,23 @@ function atualizarCarrinho() {
     total.innerText = totalProdutos.toFixed(2);
 }
     
- function calcularFretePorEndereco() {
+function calcularFretePorEndereco() {
     const endereco = document.getElementById("enderecoCliente").value;
 
     if (!endereco || endereco.length < 5) {
         frete = 0;
     } else {
-        frete = valorPorKm * distanciaMediaKm;
+        frete = 5; // frete fixo por enquanto
     }
+
+    atualizarCarrinho();
 }
     
 function atualizarTotais() {
     const totalFinal = totalProdutos + frete;
 
     document.getElementById("frete").innerText = frete.toFixed(2);
-    document.getElementById("totalFinal").innerText = totalFinal.toFixed(2);
+    document.getElementById("total").innerText = totalFinal.toFixed(2);
 }
     
 function mostrarConfirmacao() {
@@ -312,6 +311,9 @@ function mostrarConfirmacao() {
 
     const taxaEntrega = calcularTaxaEntrega();
 const totalFinal = totalProdutos + frete;
+
+document.getElementById("frete").innerText = frete.toFixed(2);
+total.innerText = totalFinal.toFixed(2);
       
     let mensagem = `🟣 *Pedido - Açaí Bottle* 🟣\n\n`;
     mensagem += `👤 Cliente: ${nome}\n`;
@@ -343,3 +345,4 @@ const totalFinal = totalProdutos + frete;
     // JS aqui
 </script>
 </html>
+
