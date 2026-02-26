@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Açai Bottle</title>
+
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+</head>
+
+<style>
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    background: #f4f4f4;
+}
+
+header {
+    background: linear-gradient(90deg,#5e2b97,#7b3fe4);
+    color: white;
+    text-align: center;
+    padding: 20px;
+}
+
+.logo {
+    width: 150px;
+    border-radius: 15px;
+    margin-bottom: 10px;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 28px;
+}
+
+.produtos {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+    padding: 20px;
+}
+
+.produto {
+    background: white;
+    padding: 15px;
+    width: 220px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    text-align: center;
+    transition: 0.3s;
+}
+
+.produto:hover {
+    transform: scale(1.05);
+}
+
+.produto img {
+    width: 100%;
+    border-radius: 10px;
+}
+
+button {
+    background: #25D366;
+    border: none;
+    color: white;
+    padding: 10px;
+    width: 100%;
+    border-radius: 6px;
+    cursor: pointer;
+    margin-top: 10px;
+    font-weight: bold;
+}
+
+button:hover {
+    background: #1ebe5d;
+}
+
+#carrinho {
+    background: white;
+    margin: 20px auto;
+    padding: 20px;
+    border-radius: 12px;
+    max-width: 500px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+#total {
+    font-weight: bold;
+    margin-top: 10px;
+    font-size: 18px;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <img src="./logo.png" alt="Logo Açai Bottle" class="logo">
+    <h1>Açai Bottle</h1>
+</header>
+
+<section class="produtos">
+
+    <div class="produto">
+        <img src="https://via.placeholder.com/220x150?text=Ninho">
+        <h3>Ninho</h3>
+        <p>R$ 14,00</p>
+        <button onclick="adicionar('Ninho',14)">Adicionar</button>
+    </div>
+
+    <div class="produto">
+        <img src="https://via.placeholder.com/220x150?text=Maracuja">
+        <h3>Maracujá</h3>
+        <p>R$ 14,00</p>
+        <button onclick="adicionar('Maracujá',14)">Adicionar</button>
+    </div>
+
+    <div class="produto">
+        <img src="https://via.placeholder.com/220x150?text=Nutella">
+        <h3>Nutella</h3>
+        <p>R$ 16,50</p>
+        <button onclick="adicionar('Nutella',16.5)">Adicionar</button>
+    </div>
+
+</section>
+
+<section id="carrinho">
+    <h2>Carrinho</h2>
+    <ul id="lista"></ul>
+    <p id="total">Total: R$ 0,00</p>
+    <button onclick="enviarWhats()">Enviar Pedido no WhatsApp</button>
+</section>
+
+<script>
+
+let carrinho = [];
+
+function adicionar(nome, preco) {
+    carrinho.push({nome, preco});
+    atualizarCarrinho();
+}
+
+function atualizarCarrinho() {
+    let lista = document.getElementById("lista");
+    let total = 0;
+    lista.innerHTML = "";
+
+    carrinho.forEach(item => {
+        let li = document.createElement("li");
+        li.textContent = item.nome + " - R$ " + item.preco.toFixed(2);
+        lista.appendChild(li);
+        total += item.preco;
+    });
+
+    document.getElementById("total").textContent = 
+        "Total: R$ " + total.toFixed(2);
+}
+
+function enviarWhats() {
+    if(carrinho.length === 0){
+        alert("Seu carrinho está vazio!");
+        return;
+    }
+
+    let numero = "5579996090459";
+    let mensagem = "Olá Açai Bottle! Gostaria de pedir:\n\n";
+    let total = 0;
+
+    carrinho.forEach(item => {
+        mensagem += "- " + item.nome + " - R$ " + item.preco.toFixed(2) + "\n";
+        total += item.preco;
+    });
+
+    mensagem += "\nTotal: R$ " + total.toFixed(2);
+
+    let url = "https://wa.me/" + numero + "?text=" + encodeURIComponent(mensagem);
+    window.open(url, "_blank");
+}
+
+</script>
+
+</body>
+</html>
