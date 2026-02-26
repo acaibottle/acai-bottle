@@ -1,29 +1,15 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-
 <head>
-    <meta charset="UTF-8">   
-    <title>Açai Bottle</title>
-  <link rel="icon" type="image/x-icon" href="favicon.ico">
-</head>
+<meta charset="UTF-8">
+<title>Açaí Bottle</title>
+<link rel="icon" type="image/x-icon" href="favicon.ico">
 
 <style>
 body {
     font-family: Arial, sans-serif;
     margin: 0;
     background: #f4f4f4;
-}
-#confirmacao {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    background: #4CAF50;
-    color: white;
-    padding: 10px 16px;
-    border-radius: 8px;
-    font-weight: bold;
-    display: none;
-    z-index: 999;
 }
 
 header {
@@ -37,11 +23,6 @@ header {
     width: 150px;
     border-radius: 15px;
     margin-bottom: 10px;
-}
-
-header h1 {
-    margin: 0;
-    font-size: 28px;
 }
 
 .produtos {
@@ -59,11 +40,6 @@ header h1 {
     border-radius: 12px;
     box-shadow: 0 4px 12px rgba(0,0,0,0.1);
     text-align: center;
-    transition: 0.3s;
-}
-
-.produto:hover {
-    transform: scale(1.05);
 }
 
 .produto img {
@@ -82,157 +58,103 @@ button {
     margin-top: 10px;
     font-weight: bold;
 }
+
 .carrinho {
-    margin-top: 20px;
+    margin: 20px;
     padding: 15px;
-    background: #f9f9f9;
+    background: #fff;
     border-radius: 10px;
 }
 
+.btn-remover {
+    background: #e53935;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    color: white;
+    border: none;
+    font-size: 12px;
+    cursor: pointer;
+    margin-left: 6px;
+}
+
 .total {
-    border-top: 1px solid #ddd;
-    padding-top: 8px;
-    margin-top: 10px;
     font-weight: bold;
+    margin-top: 10px;
     text-align: right;
-}
-
-.dados-cliente {
-    margin-top: 15px;
-}
-
-.dados-cliente h4 {
-    margin-bottom: 8px;
 }
 
 .dados-cliente input,
 .dados-cliente select {
     width: 100%;
     padding: 10px;
-    margin-bottom: 8px;
+    margin-top: 8px;
     border-radius: 6px;
     border: 1px solid #ccc;
-}
-.btn-remover {
-    width: 20px;
-    height: 20px;
-    min-width: 20px;
-    min-height: 20px;
-    padding: 0;
-    font-size: 11px;
-    line-height: 20px;
-    border-radius: 50%;
-    background: #e53935;
-    color: #fff;
-    border: none;
-    cursor: pointer;
-    text-align: center;
-}
-#confirmacao {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    background: #4CAF50;
-    color: #fff;
-    padding: 10px 16px;
-    border-radius: 8px;
-    font-weight: bold;
-    display: none;
-    z-index: 9999;
 }
 </style>
 </head>
 
 <body>
-    
-    <div id="confirmacao">✔ Item adicionado ao carrinho</div>
+
 <header>
-    <img src="./logo.png" alt="Logo Açai Bottle" class="logo">
-    <h1>Açai Bottle</h1>
+    <img src="logo.png" class="logo">
+    <h1>Açaí Bottle</h1>
 </header>
 
 <section class="produtos">
-
-<div class="produto">
-    <img src="https://via.placeholder.com/220x150?text=Tradicional">
-    <h3>Tradicional</h3>
-    <p class="descricao">O clássico que nunca erra.</p>
-    <p class="preco">R$ 12,00</p>
-    <button onclick="adicionaraocarrinho('Tradicional',12)">Adicionar</button>
-</div>
+    <div class="produto">
+        <h3>Tradicional</h3>
+        <p>R$ 12,00</p>
+        <button onclick="adicionarAoCarrinho('Tradicional',12)">Adicionar</button>
+    </div>
 
     <div class="produto">
-    <img src="img/ninho.jpg" alt="Açaí Ninho">
-    <h3>Ninho</h3>
-    <p class="descricao">
-        Açaí com creme de leite Ninho.
-        Suave, doce e irresistível.
-    </p>
-    <p class="preco">R$ 14,00</p>
-    <button onclick="adicionaraocarrinho('Ninho',14)">Adicionar</button>
-</div>
+        <h3>Ninho</h3>
+        <p>R$ 14,00</p>
+        <button onclick="adicionarAoCarrinho('Ninho',14)">Adicionar</button>
+    </div>
 
-<div class="produto">
-    <img src="img/maracuja.jpg" alt="Açaí Maracujá">
-    <h3>Maracujá</h3>
-    <p class="descricao">
-        Açaí com creme de maracujá.
-        Equilíbrio perfeito entre doce e azedinho.
-    </p>
-    <p class="preco">R$ 14,00</p>
-    <button onclick="adicionaraocarrinho('Maracujá',14)">Adicionar</button>
-</div>
+    <div class="produto">
+        <h3>Maracujá</h3>
+        <p>R$ 14,00</p>
+        <button onclick="adicionarAoCarrinho('Maracujá',14)">Adicionar</button>
+    </div>
 
-<div class="produto">
-    <img src="https://via.placeholder.com/220x150?text=Nutella">
-    <h3>Nutella</h3>
-    <p class="descricao">
-        Açaí com Nutella.
-        Cremoso, intenso e irresistível.
-    </p>
-    <p class="preco">R$ 16,50</p>
-    <button onclick="adicionaraocarrinho('Nutella',16.5)">Adicionar</button>
-</div>
+    <div class="produto">
+        <h3>Nutella</h3>
+        <p>R$ 16,50</p>
+        <button onclick="adicionarAoCarrinho('Nutella',16.5)">Adicionar</button>
+    </div>
+</section>
 
-    <div class="carrinho">
-    <h3>🛒 Seu carrinho</h3>
-
+<div class="carrinho">
+    <h3>🛒 Carrinho</h3>
     <ul id="lista-carrinho"></ul>
-        
-    <div class="frete">
-    Frete: R$ <span id="frete">0.00</span>
-</div>
-        
-    <div class="total">
-        Total: R$ <span id="total">0.00</span>
-    </div>
-   
-        
-    <!-- DADOS DO CLIENTE -->
+
+    <p>Frete: R$ <span id="frete">0.00</span></p>
+    <p class="total">Total: R$ <span id="totalFinal">0.00</span></p>
+
     <div class="dados-cliente">
-        <h4>🧾 Dados do pedido</h4>
-<input 
-    type="text" 
-    id="enderecoCliente" 
-    placeholder="Endereço de entrega"
-    onblur="calcularFretePorEndereco()"
->
+        <input type="text" id="enderecoCliente" placeholder="Endereço" onblur="calcularFrete()">
         <input type="text" id="nomeCliente" placeholder="Seu nome">
-
         <select id="pagamento">
-
             <option value="">Forma de pagamento</option>
-            <option value="Pix">Pix</option>
-            <option value="Dinheiro">Dinheiro</option>
-            <option value="Cartão">Cartão</option>
+            <option>Pix</option>
+            <option>Dinheiro</option>
+            <option>Cartão</option>
         </select>
-        <div class="finalizar">
-    <button onclick="enviarPedido()">📲 Enviar pedido no WhatsApp</button>
+        <button onclick="enviarPedido()">Enviar no WhatsApp</button>
     </div>
+</div>
 
 <script>
 let carrinho = [];
 let totalProdutos = 0;
+let frete = 0;
+
+const valorPorKm = 2.5;
+const distanciaMediaKm = 4;
 
 function adicionarAoCarrinho(nome, preco) {
     carrinho.push({ nome, preco });
@@ -242,120 +164,59 @@ function adicionarAoCarrinho(nome, preco) {
 
 function removerItem(index) {
     totalProdutos -= carrinho[index].preco;
-    carrinho.splice(index, 1);
-    atualizarCarrinho();
-}
-
-let carrinho = [];
-let totalProdutos = 0;
-
-function adicionarAoCarrinho(nome, preco) {
-    carrinho.push({ nome, preco });
-    totalProdutos += preco;
+    carrinho.splice(index,1);
     atualizarCarrinho();
 }
 
 function atualizarCarrinho() {
     const lista = document.getElementById("lista-carrinho");
-    const total = document.getElementById("total");
-
     lista.innerHTML = "";
 
-    carrinho.forEach(item => {
-        const li = document.createElement("li");
-        li.innerText = `${item.nome} - R$ ${item.preco.toFixed(2)}`;
-        lista.appendChild(li);
+    carrinho.forEach((item, index) => {
+        lista.innerHTML += `
+            <li>${item.nome} - R$ ${item.preco.toFixed(2)}
+            <button class="btn-remover" onclick="removerItem(${index})">x</button>
+            </li>
+        `;
     });
 
-    total.innerText = totalProdutos.toFixed(2);
+    atualizarTotais();
 }
-    
- function calcularFretePorEndereco() {
-    const endereco = document.getElementById("enderecoCliente").value;
 
-    if (!endereco || endereco.length < 5) {
-        frete = 0;
-    } else {
-        frete = valorPorKm * distanciaMediaKm;
-    }
+function calcularFrete() {
+    const endereco = document.getElementById("enderecoCliente").value;
+    frete = endereco.length > 5 ? valorPorKm * distanciaMediaKm : 0;
+    atualizarTotais();
 }
-    
+
 function atualizarTotais() {
-    const totalFinal = totalProdutos + frete;
-
     document.getElementById("frete").innerText = frete.toFixed(2);
-    document.getElementById("totalFinal").innerText = totalFinal.toFixed(2);
-}
-    
-function mostrarConfirmacao() {
-    const msg = document.getElementById("confirmacao");
-    msg.style.display = "block";
-    setTimeout(() => msg.style.display = "none", 1500);
+    document.getElementById("totalFinal").innerText = (totalProdutos + frete).toFixed(2);
 }
 
-
-  function enviarPedido() {
-
-    const nome = document.getElementById("nomeCliente").value;
+function enviarPedido() {
+    const nome = nomeCliente.value;
     const pagamento = document.getElementById("pagamento").value;
-    const endereco = document.getElementById("enderecoCliente").value;
+    const endereco = enderecoCliente.value;
 
-    if (carrinho.length === 0) {
-        alert("Seu carrinho está vazio.");
+    if (!nome || !pagamento || !endereco || carrinho.length === 0) {
+        alert("Preencha tudo corretamente.");
         return;
     }
 
-    if (!nome || !pagamento || !endereco) {
-        alert("Preencha nome, pagamento e endereço.");
-        return;
-    }
+    let msg = `🟣 Pedido Açaí Bottle 🟣\n\n`;
+    msg += `Cliente: ${nome}\nEndereço: ${endereco}\nPagamento: ${pagamento}\n\n`;
 
-    const taxaEntrega = calcularTaxaEntrega();
-const totalFinal = totalProdutos + frete;
-      
-    let mensagem = `🟣 *Pedido - Açaí Bottle* 🟣\n\n`;
-    mensagem += `👤 Cliente: ${nome}\n`;
-    mensagem += `📍 Endereço: ${endereco}\n`;
-    mensagem += `💳 Pagamento: ${pagamento}\n\n`;
-
-    mensagem += `🛒 Itens:\n`;
-    carrinho.forEach(item => {
-        mensagem += `• ${item.nome} - R$ ${item.preco.toFixed(2)}\n`;
+    carrinho.forEach(i => {
+        msg += `• ${i.nome} - R$ ${i.preco.toFixed(2)}\n`;
     });
 
-    mensagem += `\n🚚 Taxa de entrega: R$ ${taxaEntrega.toFixed(2)}`;
-    mensagem += `\n💰 Total: R$ ${totalFinal.toFixed(2)}\n\n`;
+    msg += `\nFrete: R$ ${frete.toFixed(2)}`;
+    msg += `\nTotal: R$ ${(totalProdutos + frete).toFixed(2)}`;
 
-    const mapsLink = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(endereco)}`;
-    mensagem += `🗺️ Localização: ${mapsLink}`;
-
-    const numeroLoja = "5579996090459";
-    const url = `https://wa.me/${numeroLoja}?text=${encodeURIComponent(mensagem)}`;
-
-    window.open(url, "_blank");
+    window.open(`https://wa.me/5579996090459?text=${encodeURIComponent(msg)}`);
 }
- 
 </script>
 
-<!-- HTML -->
 </body>
-<script>
-    // JS aqui
-</script>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
