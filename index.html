@@ -233,15 +233,7 @@ button {
 <script>
 let carrinho = [];
 let totalProdutos = 0;
-let frete = 0;
 
-const valorPorKm = 2;
-const distanciaMediaKm = 5;
-    
-        function calcularTaxaEntrega() {
-    return valorPorKm * distanciaMediaKm;
-}
-    
 function adicionarAoCarrinho(nome, preco) {
     carrinho.push({ nome, preco });
     totalProdutos += preco;
@@ -347,6 +339,7 @@ const totalFinal = totalProdutos + frete;
     // JS aqui
 </script>
 </html>
+
 
 
 
