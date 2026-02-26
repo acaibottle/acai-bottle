@@ -207,6 +207,63 @@ button {
         Total: R$ <span id="total">0.00</span>
     </div>
    
+    <div class="frete-info">
+    <h4>🚚 Frete por bairro</h4>
+
+    <strong>Aracaju</strong><br>
+    Cidade Nova / Dom Luciano – R$ 3<br>
+    Japãozinho – R$ 3<br>
+    18 do Forte – R$ 3<br>
+    Santos Dumont – R$ 3<br>
+    Santo Antônio – R$ 4<br>
+    Bugio – R$ 4<br>
+    Soledade – R$ 4<br>
+    Bairro Industrial – R$ 5<br>
+    Porto Dantas – R$ 5<br>
+    Centro – R$ 5<br>
+    América – R$ 5<br>
+    São José – R$ 6<br>
+    Jardins – R$ 7<br><br>
+
+    <strong>Nossa Senhora do Socorro</strong><br>
+    João Alves – R$ 6<br>
+    Fernando Collor – R$ 8<br>
+    Marcos Freire I – R$ 7<br>
+    Marcos Freire II – R$ 6<br>
+    Piabeta – R$ 10<br>
+    Albano Franco – R$ 10<br>
+    Novo Horizonte – R$ 10
+        <select id="bairro" onchange="atualizarFrete()">
+    <option value="">Selecione o bairro</option>
+
+    <option value="3">Cidade Nova / Dom Luciano</option>
+    <option value="3">Japãozinho</option>
+    <option value="3">18 do Forte</option>
+    <option value="3">Santos Dumont</option>
+
+    <option value="4">Santo Antônio</option>
+    <option value="4">Bugio</option>
+    <option value="4">Soledade</option>
+
+    <option value="5">Bairro Industrial</option>
+    <option value="5">Porto Dantas</option>
+    <option value="5">Centro</option>
+    <option value="5">América</option>
+
+    <option value="6">São José</option>
+    <option value="7">Jardins</option>
+
+    <option disabled>────────────</option>
+
+    <option value="6">João Alves</option>
+    <option value="8">Fernando Collor</option>
+    <option value="7">Marcos Freire I</option>
+    <option value="6">Marcos Freire II</option>
+    <option value="10">Piabeta</option>
+    <option value="10">Albano Franco</option>
+    <option value="10">Novo Horizonte</option>
+</select>
+</div>
         
     <!-- DADOS DO CLIENTE -->
     <div class="dados-cliente">
@@ -233,7 +290,15 @@ button {
 <script>
 let carrinho = [];
 let totalProdutos = 0;
-let frete = 5;
+let frete = 0;
+
+function atualizarFrete() {
+    const bairroSelect = document.getElementById("bairro");
+    frete = Number(bairroSelect.value) || 0;
+
+    document.getElementById("frete").innerText = frete.toFixed(2);
+    document.getElementById("total").innerText = (totalProdutos + frete).toFixed(2);
+}
 
 function adicionarAoCarrinho(nome, preco) {
     carrinho.push({ nome, preco });
@@ -343,6 +408,7 @@ function mostrarConfirmacao() {
     // JS aqui
 </script>
 </html>
+
 
 
 
