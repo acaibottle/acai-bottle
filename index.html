@@ -1,5 +1,8 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+<p id="confirmacao" style="display:none; color:green; font-weight:bold;">
+    ✔ Item adicionado ao carrinho
+</p>
 
 <head>
     <meta charset="UTF-8">
@@ -154,51 +157,47 @@ button:hover {
 </section>
 
 <script>
-
 let carrinho = [];
+let total = 0;
 
 function adicionar(nome, preco) {
-    carrinho.push({nome, preco});
+    carrinho.push({ nome, preco });
+    total += preco;
+
+    atualizarCarrinho();
+    mostrarConfirmacao();
+}
+
+function remover(index) {
+    total -= carrinho[index].preco;
+    carrinho.splice(index, 1);
     atualizarCarrinho();
 }
 
 function atualizarCarrinho() {
-    let lista = document.getElementById("lista");
-    let total = 0;
+    const lista = document.getElementById("lista-carrinho");
     lista.innerHTML = "";
 
-    carrinho.forEach(item => {
-        let li = document.createElement("li");
-        li.textContent = item.nome + " - R$ " + item.preco.toFixed(2);
-        lista.appendChild(li);
-        total += item.preco;
+    carrinho.forEach((item, index) => {
+        lista.innerHTML += `
+            <li>
+                ${item.nome} - R$ ${item.preco.toFixed(2)}
+                <button onclick="remover(${index})">❌</button>
+            </li>
+        `;
     });
 
-    document.getElementById("total").textContent = 
-        "Total: R$ " + total.toFixed(2);
+    document.getElementById("total").innerText = total.toFixed(2);
 }
 
-function enviarWhats() {
-    if(carrinho.length === 0){
-        alert("Seu carrinho está vazio!");
-        return;
-    }
+function mostrarConfirmacao() {
+    const msg = document.getElementById("confirmacao");
+    msg.style.display = "block";
 
-    let numero = "5579996090459";
-    let mensagem = "Olá Açai Bottle! Gostaria de pedir:\n\n";
-    let total = 0;
-
-    carrinho.forEach(item => {
-        mensagem += "- " + item.nome + " - R$ " + item.preco.toFixed(2) + "\n";
-        total += item.preco;
-    });
-
-    mensagem += "\nTotal: R$ " + total.toFixed(2);
-
-    let url = "https://wa.me/" + numero + "?text=" + encodeURIComponent(mensagem);
-    window.open(url, "_blank");
+    setTimeout(() => {
+        msg.style.display = "none";
+    }, 1500);
 }
-
 </script>
 
 </body>
