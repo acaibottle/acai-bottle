@@ -15,6 +15,18 @@ body {
     margin: 0;
     background: #f4f4f4;
 }
+#confirmacao {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: #4CAF50;
+    color: white;
+    padding: 10px 16px;
+    border-radius: 8px;
+    font-weight: bold;
+    display: none;
+    z-index: 999;
+}
 
 header {
     background: linear-gradient(90deg,#5e2b97,#7b3fe4);
@@ -72,7 +84,23 @@ button {
     margin-top: 10px;
     font-weight: bold;
 }
+.carrinho {
+    margin-top: 20px;
+}
 
+.carrinho ul {
+    list-style: none;
+    padding: 0;
+    margin-bottom: 10px;
+}
+
+.carrinho li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+    gap: 10px;
+}
 button:hover {
     background: #1ebe5d;
 }
@@ -202,9 +230,7 @@ function mostrarConfirmacao() {
     }, 1500);
 }
 </script>
-<p id="confirmacao" style="display:none; color:green; font-weight:bold;">
-    ✔ Item adicionado ao carrinho
-</p>
+<div id="confirmacao">✔ Item adicionado ao carrinho</div>
 
 </body>
 </html>
