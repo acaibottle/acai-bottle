@@ -193,7 +193,8 @@ button {
     <p class="preco">R$ 16,50</p>
     <button onclick="adicionar('Nutella',16.5)">Adicionar</button>
 </div>
-<div class="carrinho">
+
+    <div class="carrinho">
     <h3>🛒 Seu carrinho</h3>
 
     <ul id="lista-carrinho"></ul>
@@ -234,22 +235,30 @@ function remover(index) {
     carrinho.splice(index, 1);
     atualizarCarrinho();
 }
+    function removerItem(index) {
+    total -= carrinho[index].preco;
+    carrinho.splice(index, 1);
+    atualizarCarrinho();
+}
 
 function atualizarCarrinho() {
     const lista = document.getElementById("lista-carrinho");
+    const totalSpan = document.getElementById("total");
+
     lista.innerHTML = "";
 
     carrinho.forEach((item, index) => {
-        lista.innerHTML += `
-            <li>
-                <span>${item.nome} - R$ ${item.preco.toFixed(2)}</span>
-                <button class="btn-remover" onclick="remover(${index})">✕</button>
-            </li>
+        const li = document.createElement("li");
+        li.innerHTML = `
+            ${item.nome} - R$ ${item.preco.toFixed(2)}
+            <button class="btn-remover" onclick="removerItem(${index})">x</button>
         `;
+        lista.appendChild(li);
     });
 
-    document.getElementById("total").innerText = total.toFixed(2);
+    totalSpan.innerText = total.toFixed(2);
 }
+
    
 function mostrarConfirmacao() {
     const msg = document.getElementById("confirmacao");
@@ -297,6 +306,7 @@ function enviarPedido() {
     // JS aqui
 </script>
 </html>
+
 
 
 
