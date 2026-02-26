@@ -89,25 +89,29 @@ button {
     border-radius: 10px;
 }
 
-.carrinho ul {
-    list-style: none;
-    padding: 0;
-    margin: 0 0 10px 0;
-}
-
-.carrinho li {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 8px;
-    font-size: 14px;
-}
-
 .total {
     border-top: 1px solid #ddd;
     padding-top: 8px;
+    margin-top: 10px;
     font-weight: bold;
     text-align: right;
+}
+
+.dados-cliente {
+    margin-top: 15px;
+}
+
+.dados-cliente h4 {
+    margin-bottom: 8px;
+}
+
+.dados-cliente input,
+.dados-cliente select {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 8px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
 }
 .btn-remover {
     width: 20px;
@@ -307,6 +311,7 @@ function enviarPedido() {
 </body>
 
 </html>
+
 
 
 
