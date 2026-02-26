@@ -84,14 +84,31 @@ button {
     margin-top: 10px;
     font-weight: bold;
 }
+.btn-remover {
+    width: 22px;
+    height: 22px;
+    font-size: 12px;
+    border-radius: 50%;
+    background: #e53935;
+    color: white;
+    border: none;
+    cursor: pointer;
+    line-height: 22px;
+    padding: 0;
+    flex-shrink: 0;
+}
+
 .carrinho {
     margin-top: 20px;
+    padding: 15px;
+    background: #f9f9f9;
+    border-radius: 10px;
 }
 
 .carrinho ul {
     list-style: none;
     padding: 0;
-    margin-bottom: 10px;
+    margin: 0 0 10px 0;
 }
 
 .carrinho li {
@@ -99,26 +116,16 @@ button {
     justify-content: space-between;
     align-items: center;
     margin-bottom: 8px;
-    gap: 10px;
-}
-button:hover {
-    background: #1ebe5d;
+    font-size: 14px;
 }
 
-#carrinho {
-    background: white;
-    margin: 20px auto;
-    padding: 20px;
-    border-radius: 12px;
-    max-width: 500px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-}
-
-#total {
+.total {
+    border-top: 1px solid #ddd;
+    padding-top: 8px;
     font-weight: bold;
-    margin-top: 10px;
-    font-size: 18px;
+    text-align: right;
 }
+
 </style>
 </head>
 
@@ -196,6 +203,7 @@ function adicionar(nome, preco) {
     total += preco;
 
     atualizarCarrinho();
+<button class="btn-remover" onclick="remover(${index})">✕</button>
     mostrarConfirmacao();
 }
 
