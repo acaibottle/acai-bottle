@@ -198,6 +198,26 @@ button {
     <div class="total">
         Total: R$ <span id="total">0.00</span>
 <button onclick="enviarWhats()">Enviar Pedido no WhatsApp</button>    
+function enviarPedido() {
+    if (carrinho.length === 0) {
+        alert("Seu carrinho está vazio!");
+        return;
+    }
+
+    let mensagem = "🛒 *Pedido Açaí Bottle*%0A%0A";
+
+    carrinho.forEach(item => {
+        mensagem += `• ${item.nome} - R$ ${item.preco.toFixed(2)}%0A`;
+    });
+
+    mensagem += `%0A*Total:* R$ ${total.toFixed(2)}`;
+
+    const telefone = "5579996090459";
+    const url = `https://wa.me/${telefone}?text=${mensagem}`;
+
+    window.open(url, "_blank");
+}
+
 </div>
 </div>
 
