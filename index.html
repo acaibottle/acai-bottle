@@ -140,18 +140,7 @@ button {
 </head>
 
 <body>
-<div class="dados-cliente">
-    <h3>🧾 Dados do pedido</h3>
-
-    <input type="text" id="nomeCliente" placeholder="Seu nome" required>
-
-    <select id="pagamento">
-        <option value="">Forma de pagamento</option>
-        <option value="Pix">Pix</option>
-        <option value="Dinheiro">Dinheiro</option>
-        <option value="Cartão">Cartão</option>
-    </select>
-</div>
+    
     <div id="confirmacao">✔ Item adicionado ao carrinho</div>
 <header>
     <img src="./logo.png" alt="Logo Açai Bottle" class="logo">
@@ -200,14 +189,30 @@ button {
     <p class="preco">R$ 16,50</p>
     <button onclick="adicionar('Nutella',16.5)">Adicionar</button>
 </div>
-
-
 <div class="carrinho">
     <h3>🛒 Seu carrinho</h3>
+
     <ul id="lista-carrinho"></ul>
+
     <div class="total">
         Total: R$ <span id="total">0.00</span>
+    </div>
+
+    <!-- DADOS DO CLIENTE -->
+    <div class="dados-cliente">
+        <h4>🧾 Dados do pedido</h4>
+
+        <input type="text" id="nomeCliente" placeholder="Seu nome">
+
+        <select id="pagamento">
+            <option value="">Forma de pagamento</option>
+            <option value="Pix">Pix</option>
+            <option value="Dinheiro">Dinheiro</option>
+            <option value="Cartão">Cartão</option>
+        </select>
+    </div>
 </div>
+
 <div class="finalizar">
     <button onclick="enviarPedido()">📲 Enviar pedido no WhatsApp</button>
 </div>
@@ -302,5 +307,6 @@ function enviarPedido() {
 </body>
 
 </html>
+
 
 
