@@ -71,6 +71,17 @@ header h1 {
     border-radius: 10px;
 }
 
+    .acompanhamentos {
+    text-align: left;
+    font-size: 14px;
+    margin-top: 10px;
+}
+
+.acompanhamentos label {
+    display: block;
+    margin-bottom: 4px;
+}
+    
 button {
     background: #25D366;
     border: none;
@@ -205,6 +216,64 @@ button {
     <p class="preco">R$ 16,50</p>
     <button onclick="adicionarAoCarrinho('Nutella',16.5)">Adicionar</button>
 </div>
+
+    <div class="produto">
+    <img src="img/meu-acai.jpg" alt="Meu Açaí">
+    <h3>Meu Açaí</h3>
+
+    <p class="descricao">
+        Açaí batido, cremoso e gelado, montado com os complementos da sua escolha.
+    </p>
+
+    <p class="preco">R$ 14,00</p>
+
+    <div class="acompanhamentos">
+        <strong>Escolha até 2 acompanhamentos:</strong>
+
+        <label>
+            <input type="checkbox" value="Amendoim triturado" onchange="controlarAcompanhamentos(this)">
+            Amendoim triturado
+        </label>
+
+        <label>
+            <input type="checkbox" value="Paçoca" onchange="controlarAcompanhamentos(this)">
+            Paçoca
+        </label>
+
+        <label>
+            <input type="checkbox" value="Leite em pó" onchange="controlarAcompanhamentos(this)">
+            Leite em pó
+        </label>
+
+        <label>
+            <input type="checkbox" value="Leite condensado" onchange="controlarAcompanhamentos(this)">
+            Leite condensado
+        </label>
+
+        <label>
+            <input type="checkbox" value="Creme de paçoca" onchange="controlarAcompanhamentos(this)">
+            Creme de paçoca
+        </label>
+
+        <label>
+            <input type="checkbox" value="Creme de maracujá" onchange="controlarAcompanhamentos(this)">
+            Creme de maracujá
+        </label>
+
+        <label>
+            <input type="checkbox" value="Creme de ninho" onchange="controlarAcompanhamentos(this)">
+            Creme de ninho
+        </label>
+
+        <label>
+            <input type="checkbox" value="Nutella (+R$ 1,50)" data-extra="1.5" onchange="controlarAcompanhamentos(this)">
+            Nutella (+R$ 1,50)
+        </label>
+    </div>
+
+    <button onclick="adicionarMeuAcai()">Adicionar Meu Açaí</button>
+</div>
+    
 <div id="confirmacao">✔ Item adicionado ao carrinho</div>
     <div class="carrinho">
     <h3>🛒 Seu carrinho</h3>
@@ -245,6 +314,7 @@ button {
     Piabeta – R$ 10<br>
     Albano Franco – R$ 10<br>
     Novo Horizonte – R$ 10
+    
         <select id="bairro" onchange="atualizarFrete()">
     <option value="">Selecione o bairro</option>
 
@@ -305,7 +375,52 @@ let totalProdutos = 0;
 let frete = 0;
 let bairroSelecionado = "";
 
-function atualizarFrete() {
+function controlarAcompanhamentos(checkbox) {
+    const selecionados = document.querySelectorAll(
+        '.acompanhamentos input[type="checkbox"]:checked'
+    );
+
+    if (selecionados.length > 2) {
+        checkbox.checked = false;
+        alert("Você pode escolher no máximo 2 acompanhamentos.");
+    }
+}
+    
+  function adicionarMeuAcai() {
+    const selecionados = document.querySelectorAll(
+        '.acompanhamentos input[type="checkbox"]:checked'
+    );
+
+    if (selecionados.length === 0) {
+        alert("Escolha pelo menos 1 acompanhamento.");
+        return;
+    }
+
+    let acompanhamentos = [];
+    let precoFinal = 14;
+
+    selecionados.forEach(item => {
+        acompanhamentos.push(item.value);
+
+        const extra = Number(item.dataset.extra || 0);
+        precoFinal += extra;
+    });
+
+    carrinho.push({
+        nome: "Meu Açaí",
+        preco: precoFinal,
+        detalhes: acompanhamentos.join(", ")
+    });
+
+    totalProdutos += precoFinal;
+    atualizarCarrinho();
+    mostrarConfirmacao();
+
+    // Limpa seleção após adicionar
+    selecionados.forEach(item => item.checked = false);
+}
+    
+    function atualizarFrete() {
 
     const select = document.getElementById("bairro");
 
@@ -354,10 +469,7 @@ function atualizarCarrinho() {
 
     carrinho.forEach((item, index) => {
         const li = document.createElement("li");
-        li.innerHTML = `
-            ${item.nome} - R$ ${item.preco.toFixed(2)}
-            <button class="btn-remover" onclick="removerItem(${index})">x</button>
-        `;
+      li.innerText = `${item.nome} (${item.detalhes || ""}) - R$ ${item.preco.toFixed(2)}`;
         lista.appendChild(li);
     });
 
@@ -437,6 +549,7 @@ function enviarPedido() {
     // JS aqui
 </script>
 </html>
+
 
 
 
