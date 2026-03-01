@@ -444,6 +444,10 @@ function adicionarAoCarrinho(nome, preco) {
     mostrarConfirmacao();
 }
 
+    function adicionaraocarrinho(nome, preco) {
+    adicionarAoCarrinho(nome, preco);
+}
+    
 function removerItem(index) {
     totalProdutos -= carrinho[index].preco;
     carrinho.splice(index, 1);
@@ -568,6 +572,7 @@ function enviarPedido() {
     // JS aqui
 </script>
 </html>
+
 
 
 
