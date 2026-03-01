@@ -443,23 +443,11 @@ function adicionarAoCarrinho(nome, preco) {
     atualizarCarrinho();
     mostrarConfirmacao();
 }
-
-    function adicionaraocarrinho(nome, preco) {
-    adicionarAoCarrinho(nome, preco);
-}
     
 function removerItem(index) {
     totalProdutos -= carrinho[index].preco;
     carrinho.splice(index, 1);
     atualizarCarrinho();
-}
-
-function adicionarAoCarrinho(nome, preco) {
-    carrinho.push({ nome, preco });
-    totalProdutos += preco;
-
-    atualizarCarrinho();
-    mostrarConfirmacao();
 }
 
     function calcularTotalFinal() {
@@ -572,6 +560,7 @@ function enviarPedido() {
     // JS aqui
 </script>
 </html>
+
 
 
 
