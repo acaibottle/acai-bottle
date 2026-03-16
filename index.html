@@ -328,7 +328,7 @@ Adicionar
 
         <label>
             <input type="checkbox" value="Nutella (+R$ 1,50)" data-extra="1.5" onchange="controlarAcompanhamentos(this)">
-            Nutella (+R$ 1,50)
+            Nutella (+R$ 2,00)
         </label>
     </div>
 
@@ -636,9 +636,17 @@ function enviarPedido() {
 
     mensagem += `🛒 Itens:\n`;
 
-    carrinho.forEach(item => {
+    mensagem += `🛒 Itens:\n`;
+
+carrinho.forEach(item => {
+
+    if (item.detalhes) {
+        mensagem += `• ${item.nome} (${item.detalhes}) - R$ ${item.preco.toFixed(2)}\n`;
+    } else {
         mensagem += `• ${item.nome} - R$ ${item.preco.toFixed(2)}\n`;
-    });
+    }
+
+});
 
     if (freteFinal === 0 && totalProdutos >= 55) {
         mensagem += `\n🚚 Frete: GRÁTIS 🎉`;
