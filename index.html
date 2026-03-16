@@ -165,24 +165,38 @@ button {
 <section class="produtos">
 
 <div class="produto">
-    <img src="https://via.placeholder.com/220x150?text=Tradicional">
-    <h3>Tradicional</h3>
-    <p class="descricao">Açaí batido, cremoso e gelado. 
-        O clássico no ponto certo.</p>
-    <p class="preco">R$ 12,00</p>
-    <div class="acompanhamentos">
+
+<img src="https://via.placeholder.com/220x150?text=Tradicional">
+
+<h3>Tradicional</h3>
+
+<p class="descricao">
+Açaí batido, cremoso e gelado. 
+O clássico no ponto certo.
+</p>
+
+<p class="preco">R$ 12,00</p>
+
+<div class="acompanhamentos">
+
 <strong>Adicionais:</strong>
 
 <label>
-<input type="checkbox" class="extra" value="Leite condensado" data-preco="1">
+<input type="checkbox" value="Leite condensado" data-extra="1">
 Leite condensado (+R$1)
 </label>
 
 <label>
-<input type="checkbox" class="extra" value="Amendoim triturado" data-preco="1">
+<input type="checkbox" value="Amendoim triturado" data-extra="1">
 Amendoim triturado (+R$1)
 </label>
-    <button onclick="adicionarProduto(this,'Tradicional',12)">
+
+</div>
+
+<button onclick="adicionarProduto(this,'Tradicional',12)">
+Adicionar
+</button>
+
 </div>
 
     <div class="produto">
@@ -398,33 +412,41 @@ function controlarAcompanhamentos(checkbox) {
     }
 }
 
-    function adicionarProduto(botao, nome, precoBase) {
+function adicionarProduto(botao, nome, precoBase) {
 
-    const produto = botao.closest(".produto");
-    const extrasSelecionados = produto.querySelectorAll(".extra:checked");
+const produto = botao.closest(".produto");
+const extrasSelecionados = produto.querySelectorAll("input[type='checkbox']:checked");
 
-    let precoFinal = precoBase;
-    let extras = [];
+let precoFinal = precoBase;
+let extras = [];
 
-    extrasSelecionados.forEach(extra => {
-        precoFinal += Number(extra.dataset.preco);
-        extras.push(extra.value);
-    });
+extrasSelecionados.forEach(extra => {
 
-    carrinho.push({
-        nome: nome,
-        preco: precoFinal,
-        detalhes: extras.join(", ")
-    });
+extras.push(extra.value);
 
-    totalProdutos += precoFinal;
+const extraPreco = Number(extra.dataset.extra || 0);
 
-    atualizarCarrinho();
-    mostrarConfirmacao();
+precoFinal += extraPreco;
 
-    extrasSelecionados.forEach(e => e.checked = false);
+});
+
+carrinho.push({
+
+nome: nome,
+preco: precoFinal,
+detalhes: extras.join(", ")
+
+});
+
+totalProdutos += precoFinal;
+
+atualizarCarrinho();
+
+mostrarConfirmacao();
+
+extrasSelecionados.forEach(e => e.checked = false);
+
 }
-    
   function adicionarMeuAcai() {
     const selecionados = document.querySelectorAll(
         '.acompanhamentos input[type="checkbox"]:checked'
