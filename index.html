@@ -124,6 +124,18 @@ button {
     border-radius: 6px;
     border: 1px solid #ccc;
 }
+
+    .tamanho {
+    text-align: left;
+    margin-top: 10px;
+    font-size: 14px;
+}
+
+.tamanho label {
+    display: block;
+    margin-bottom: 4px;
+}
+    
 .btn-remover {
     width: 20px;
     height: 20px;
@@ -210,11 +222,70 @@ Açaí batido, cremoso e gelado.
 O clássico no ponto certo.
 </p>
 
-<p class="preco">R$ 12,00</p>
+<div class="tamanho">
+
+<strong>Escolha o tamanho:</strong>
+
+<label>
+<input type="radio" name="tamanho-tradicional" value="300" data-preco="12">
+300ml (R$12)
+</label>
+
+<label>
+<input type="radio" name="tamanho-tradicional" value="500" data-preco="18">
+500ml (R$18)
+</label>
+
+</div>
 
 <div class="acompanhamentos">
-
 <strong>Adicionais:</strong>
+
+<label>
+<input type="checkbox" value="Leite condensado" data-extra="1">
+Leite condensado (+R$1)
+</label>
+
+<label>
+<input type="checkbox" value="Amendoim triturado" data-extra="1">
+Amendoim triturado (+R$1)
+</label>
+</div>
+
+<button onclick="adicionarProdutoComTamanho(this,'Tradicional')">
+Adicionar
+</button>
+
+</div>
+
+   <div class="produto">
+
+<img src="img/ninho.jpg">
+
+<h3>Ninho</h3>
+
+<p class="descricao">
+Açaí batido, cremoso e gelado, montado em camadas com creme de leite ninho.
+Suave, doce e irresistível.
+</p>
+
+<div class="tamanho">
+
+<strong>Escolha o tamanho:</strong>
+
+<label>
+<input type="radio" name="tamanho-ninho" value="300" data-preco="14">
+300ml (R$14)
+</label>
+
+<label>
+<input type="radio" name="tamanho-ninho" value="500" data-preco="21">
+500ml (R$21)
+</label>
+
+</div>
+
+<div class="acompanhamentos">
 
 <label>
 <input type="checkbox" value="Leite condensado" data-extra="1">
@@ -228,54 +299,151 @@ Amendoim triturado (+R$1)
 
 </div>
 
-<button onclick="adicionarProduto(this,'Tradicional',12)">
+<button onclick="adicionarProdutoComTamanho(this,'Ninho')">
 Adicionar
 </button>
 
 </div>
 
-    <div class="produto">
-    <img src="img/ninho.jpg" alt="Açaí Ninho">
-    <h3>Ninho</h3>
-    <p class="descricao">
-        Açaí batido, cremoso e gelado, montado em camadas com creme de leite ninho.
-        Suave, doce e irresistível.
-    </p>
-    <p class="preco">R$ 14,00</p>
-    <button onclick="adicionarAoCarrinho('Ninho',14)">Adicionar</button>
+<div class="produto">
+
+<img src="img/maracuja.jpg">
+
+<h3>Maracujá</h3>
+
+<p class="descricao">
+Açaí batido, cremoso e gelado, montado em camadas com creme de maracujá.
+Equilíbrio perfeito entre doce e azedinho.
+</p>
+
+<div class="tamanho">
+
+<strong>Escolha o tamanho:</strong>
+
+<label>
+<input type="radio" name="tamanho-maracuja" value="300" data-preco="14">
+300ml (R$14)
+</label>
+
+<label>
+<input type="radio" name="tamanho-maracuja" value="500" data-preco="21">
+500ml (R$21)
+</label>
+
 </div>
 
-<div class="produto">
-    <img src="img/maracuja.jpg" alt="Açaí Maracujá">
-    <h3>Maracujá</h3>
-    <p class="descricao">
-        Açaí batido, cremoso e gelado, montado em camadas com creme de maracujá.
-        Equilíbrio perfeito entre doce e azedinho.
-    </p>
-    <p class="preco">R$ 14,00</p>
-    <button onclick="adicionarAoCarrinho('Maracujá',14)">Adicionar</button>
+<div class="acompanhamentos">
+
+<label>
+<input type="checkbox" value="Leite condensado" data-extra="1">
+Leite condensado (+R$1)
+</label>
+
+<label>
+<input type="checkbox" value="Amendoim triturado" data-extra="1">
+Amendoim triturado (+R$1)
+</label>
+
+</div>
+
+<button onclick="adicionarProdutoComTamanho(this,'Maracujá')">
+Adicionar
+</button>
+
 </div>
     
 <div class="produto">
-    <img src="img/pacoca.jpg" alt="Açaí Paçoca">
-    <h3>Paçoca</h3>
-    <p class="descricao">
-        Açaí batido, cremoso e gelado, montado em camadas com creme de paçoca.
-        Sabor marcante e irresistivelmente brasileiro.
-    </p>
-    <p class="preco">R$ 14,00</p>
-    <button onclick="adicionarAoCarrinho('Paçoca',14)">Adicionar</button>
+
+<img src="img/pacoca.jpg">
+
+<h3>Paçoca</h3>
+
+<p class="descricao">
+Açaí batido, cremoso e gelado, montado em camadas com creme de paçoca.
+Sabor marcante e irresistivelmente brasileiro.
+</p>
+
+<div class="tamanho">
+
+<strong>Escolha o tamanho:</strong>
+
+<label>
+<input type="radio" name="tamanho-pacoca" value="300" data-preco="14">
+300ml (R$14)
+</label>
+
+<label>
+<input type="radio" name="tamanho-pacoca" value="500" data-preco="21">
+500ml (R$21)
+</label>
+
+</div>
+
+<div class="acompanhamentos">
+
+<label>
+<input type="checkbox" value="Leite condensado" data-extra="1">
+Leite condensado (+R$1)
+</label>
+
+<label>
+<input type="checkbox" value="Amendoim triturado" data-extra="1">
+Amendoim triturado (+R$1)
+</label>
+
+</div>
+
+<button onclick="adicionarProdutoComTamanho(this,'Paçoca')">
+Adicionar
+</button>
+
 </div>
     
 <div class="produto">
-   <img src="img/nutella.jpg" alt="Açaí Nutella">
-    <h3>Nutella</h3>
-    <p class="descricao">
-        Açaí batido, cremoso e gelado, montado em camadas com Nutella.
-        Cremoso, intenso e irresistível.
-    </p>
-    <p class="preco">R$ 16,00</p>
-    <button onclick="adicionarAoCarrinho('Nutella',16.5)">Adicionar</button>
+
+<img src="img/nutella.jpg">
+
+<h3>Nutella</h3>
+
+<p class="descricao">
+Açaí batido, cremoso e gelado, montado em camadas com Nutella.
+Cremoso, intenso e irresistível.
+</p>
+
+<div class="tamanho">
+
+<strong>Escolha o tamanho:</strong>
+
+<label>
+<input type="radio" name="tamanho-nutella" value="300" data-preco="16.5">
+300ml (R$16,50)
+</label>
+
+<label>
+<input type="radio" name="tamanho-nutella" value="500" data-preco="26">
+500ml (R$26)
+</label>
+
+</div>
+
+<div class="acompanhamentos">
+
+<label>
+<input type="checkbox" value="Leite condensado" data-extra="1">
+Leite condensado (+R$1)
+</label>
+
+<label>
+<input type="checkbox" value="Amendoim triturado" data-extra="1">
+Amendoim triturado (+R$1)
+</label>
+
+</div>
+
+<button onclick="adicionarProdutoComTamanho(this,'Nutella')">
+Adicionar
+</button>
+
 </div>
 
     <div class="produto">
@@ -439,7 +607,49 @@ let totalProdutos = 0;
 let frete = 0;
 let bairroSelecionado = "";
 
-function controlarAcompanhamentos(checkbox) {
+function adicionarProdutoComTamanho(botao, nome) {
+
+const produto = botao.closest(".produto");
+
+// pegar tamanho selecionado
+const tamanhoSelecionado = produto.querySelector("input[type='radio']:checked");
+
+if (!tamanhoSelecionado) {
+    alert("Escolha o tamanho do açaí.");
+    return;
+}
+
+const tamanho = tamanhoSelecionado.value;
+let precoBase = Number(tamanhoSelecionado.dataset.preco);
+
+// pegar adicionais
+const extrasSelecionados = produto.querySelectorAll("input[type='checkbox']:checked");
+
+let extras = [];
+
+extrasSelecionados.forEach(extra => {
+    precoBase += Number(extra.dataset.extra || 0);
+    extras.push(extra.value);
+});
+
+carrinho.push({
+    nome: nome + " " + tamanho + "ml",
+    preco: precoBase,
+    detalhes: extras.join(", ")
+});
+
+totalProdutos += precoBase;
+
+atualizarCarrinho();
+mostrarConfirmacao();
+
+// limpar seleção
+tamanhoSelecionado.checked = false;
+extrasSelecionados.forEach(e => e.checked = false);
+
+}
+    
+    function controlarAcompanhamentos(checkbox) {
     const selecionados = document.querySelectorAll(
         '.acompanhamentos input[type="checkbox"]:checked'
     );
