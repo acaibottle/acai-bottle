@@ -4,137 +4,77 @@
 <meta charset="UTF-8">
 <title>Açaí Bottle</title>
 <link rel="icon" href="favicon.ico">
+</head>
 
 <style>
-
 body{
-    margin:0;
-    font-family:Arial;
-    background:#f4f4f4;
+font-family:Arial;
+margin:0;
+background:#f4f4f4;
+display:flex;
 }
 
 /* LAYOUT */
 .container{
-    display:flex;
+display:flex;
+width:100%;
 }
 
-/* PRODUTOS */
 .lado-produtos{
-    width:70%;
-}
-
-header{
-    background:linear-gradient(90deg,#5e2b97,#7b3fe4);
-    color:white;
-    text-align:center;
-    padding:20px;
-}
-
-.logo{
-    width:120px;
-}
-
-.produtos{
-    display:grid;
-    grid-template-columns:repeat(auto-fill,minmax(230px,1fr));
-    gap:20px;
-    padding:20px;
-}
-
-.produto{
-    background:white;
-    padding:15px;
-    border-radius:12px;
-    box-shadow:0 4px 10px rgba(0,0,0,0.1);
-}
-
-.produto img{
-    width:100%;
-    height:150px;
-    object-fit:cover;
-    border-radius:10px;
-}
-
-.descricao{
-    font-size:14px;
-}
-
-.tamanho, .acompanhamentos{
-    font-size:14px;
-    margin-top:10px;
-}
-
-button{
-    background:#25D366;
-    color:white;
-    border:none;
-    padding:10px;
-    border-radius:8px;
-    margin-top:10px;
-    cursor:pointer;
-}
-
-/* CARRINHO */
-.lado-carrinho{
-    width:30%;
-    position:sticky;
-    top:0;
-    height:100vh;
-    overflow:auto;
-    padding:15px;
+width:70%;
+padding:20px;
 }
 
 .carrinho{
-    background:white;
-    padding:15px;
-    border-radius:12px;
-}
-
-#lista-carrinho li{
-    display:flex;
-    justify-content:space-between;
-    margin-bottom:5px;
-}
-
-.btn-remover{
-    background:red;
-    color:white;
-    border:none;
-    border-radius:50%;
-    width:20px;
-    height:20px;
-    cursor:pointer;
-}
-
-.total{
-    text-align:right;
-    font-weight:bold;
-}
-
-/* POPUP */
-.modal-frete{
-display:none;
+width:30%;
+background:#fff;
+padding:15px;
 position:fixed;
+right:0;
 top:0;
-left:0;
-width:100%;
 height:100%;
-background:rgba(0,0,0,0.5);
-justify-content:center;
-align-items:center;
+overflow:auto;
+box-shadow:-3px 0 10px rgba(0,0,0,0.1);
 }
 
-.modal-conteudo{
-background:white;
-padding:20px;
+/* PRODUTOS */
+.produtos{
+display:flex;
+flex-wrap:wrap;
+gap:20px;
+}
+
+.produto{
+background:#fff;
+padding:15px;
+width:220px;
+border-radius:10px;
+box-shadow:0 4px 10px rgba(0,0,0,0.1);
+}
+
+.produto img{
+width:100%;
 border-radius:10px;
 }
 
-.fechar{
+/* BOTÕES */
+button{
+background:#25D366;
+color:#fff;
+border:none;
+padding:10px;
+border-radius:6px;
 cursor:pointer;
-position:absolute;
-top:10px;
-right:15px;
+margin-top:8px;
+width:100%;
+}
+
+.btn-remover{
+width:22px;
+height:22px;
+border-radius:50%;
+background:red;
+color:#fff;
 }
 
 /* CONFIRMAÇÃO */
@@ -143,14 +83,31 @@ position:fixed;
 bottom:20px;
 right:20px;
 background:#4CAF50;
-color:white;
+color:#fff;
 padding:10px;
-border-radius:8px;
+border-radius:6px;
 display:none;
 }
 
+/* MODAL */
+.modal{
+display:none;
+position:fixed;
+width:100%;
+height:100%;
+background:rgba(0,0,0,0.6);
+justify-content:center;
+align-items:center;
+}
+
+.modal-box{
+background:#fff;
+padding:20px;
+border-radius:10px;
+max-width:300px;
+}
+
 </style>
-</head>
 
 <body>
 
@@ -158,30 +115,22 @@ display:none;
 
 <div class="container">
 
-<!-- PRODUTOS -->
 <div class="lado-produtos">
 
-<header>
-<img src="logo.png" class="logo">
-<h1>Açaí Bottle</h1>
-</header>
+<h2>🍧 Cardápio</h2>
 
-<section class="produtos">
+<div class="produtos">
 
 <!-- TRADICIONAL -->
 <div class="produto">
-<img src="https://via.placeholder.com/220x150">
+<img src="https://via.placeholder.com/220">
 <h3>Tradicional</h3>
 
-<div class="tamanho">
-<label><input type="radio" name="trad" data-preco="12">300ml</label>
-<label><input type="radio" name="trad" data-preco="18">500ml</label>
-</div>
+<label><input type="radio" name="trad" data-preco="12">300ml R$12</label>
+<label><input type="radio" name="trad" data-preco="18">500ml R$18</label>
 
-<div class="acompanhamentos">
-<label><input type="checkbox" data-extra="1" value="Leite condensado">Leite condensado</label>
-<label><input type="checkbox" data-extra="1" value="Amendoim">Amendoim</label>
-</div>
+<label><input type="checkbox" data-extra="1" value="Leite condensado"> +Leite condensado</label>
+<label><input type="checkbox" data-extra="1" value="Amendoim"> +Amendoim</label>
 
 <button onclick="add(this,'Tradicional')">Adicionar</button>
 </div>
@@ -191,12 +140,32 @@ display:none;
 <img src="img/ninho.jpg">
 <h3>Ninho</h3>
 
-<div class="tamanho">
-<label><input type="radio" name="ninho" data-preco="14">300ml</label>
-<label><input type="radio" name="ninho" data-preco="21">500ml</label>
-</div>
+<label><input type="radio" name="ninho" data-preco="14">300ml R$14</label>
+<label><input type="radio" name="ninho" data-preco="21">500ml R$21</label>
 
 <button onclick="add(this,'Ninho')">Adicionar</button>
+</div>
+
+<!-- MARACUJA -->
+<div class="produto">
+<img src="img/maracuja.jpg">
+<h3>Maracujá</h3>
+
+<label><input type="radio" name="mara" data-preco="14">300ml R$14</label>
+<label><input type="radio" name="mara" data-preco="21">500ml R$21</label>
+
+<button onclick="add(this,'Maracujá')">Adicionar</button>
+</div>
+
+<!-- NUTELLA -->
+<div class="produto">
+<img src="img/nutella.jpg">
+<h3>Nutella</h3>
+
+<label><input type="radio" name="nut" data-preco="16.5">300ml R$16,50</label>
+<label><input type="radio" name="nut" data-preco="26">500ml R$26</label>
+
+<button onclick="add(this,'Nutella')">Adicionar</button>
 </div>
 
 <!-- MEU AÇAÍ -->
@@ -204,45 +173,37 @@ display:none;
 <img src="img/meu-acai.jpg">
 <h3>Meu Açaí</h3>
 
-<div class="tamanho">
-<label><input type="radio" name="meu" data-preco="14">300ml</label>
-<label><input type="radio" name="meu" data-preco="21">500ml</label>
+<label><input type="radio" name="meu" data-preco="14">300ml R$14</label>
+<label><input type="radio" name="meu" data-preco="21">500ml R$21</label>
+
+<button onclick="abrirModal()">Escolher acompanhamentos</button>
+<button onclick="addMeu(this)">Adicionar</button>
 </div>
 
-<button onclick="abrirMeuAcai()">Escolher acompanhamentos</button>
-<button onclick="addMeuAcai(this)">Adicionar</button>
 </div>
-
-</section>
-
 </div>
 
 <!-- CARRINHO -->
-<div class="lado-carrinho">
-
 <div class="carrinho">
-<h3>🛒 Carrinho</h3>
 
-<ul id="lista-carrinho"></ul>
+<h3>🛒 Carrinho</h3>
+<ul id="lista"></ul>
 
 <p>Frete: R$ <span id="frete">0</span></p>
+<p><b>Total: R$ <span id="total">0</span></b></p>
 
-<div class="total">
-Total: R$ <span id="total">0</span>
-</div>
-
-<select id="bairro" onchange="freteChange(this)">
+<select id="bairro" onchange="freteCalc()">
 <option value="">Bairro</option>
-<option value="3">Japãozinho</option>
-<option value="5">Centro</option>
-<option value="7">Jardins</option>
+<option value="3" data-nome="Cidade Nova">Cidade Nova</option>
+<option value="5" data-nome="Centro">Centro</option>
+<option value="7" data-nome="Jardins">Jardins</option>
 </select>
 
-<input id="nomeCliente" placeholder="Nome">
-<input id="enderecoCliente" placeholder="Endereço">
+<input id="nome" placeholder="Seu nome">
+<input id="endereco" placeholder="Endereço">
 
 <select id="pagamento">
-<option value="">Pagamento</option>
+<option>Pagamento</option>
 <option>Pix</option>
 <option>Dinheiro</option>
 <option>Cartão</option>
@@ -254,119 +215,149 @@ Total: R$ <span id="total">0</span>
 
 </div>
 
-</div>
+<!-- MODAL -->
+<div id="modal" class="modal">
+<div class="modal-box">
 
-<!-- POPUP -->
-<div id="modalMeuAcai" class="modal-frete">
-<div class="modal-conteudo">
-<span onclick="fecharMeuAcai()" class="fechar">X</span>
+<h4>Escolha até 2</h4>
 
-<label><input type="checkbox" value="Paçoca">Paçoca</label>
-<label><input type="checkbox" value="Leite condensado">Leite condensado</label>
+<label><input type="checkbox" value="Paçoca"> Paçoca</label>
+<label><input type="checkbox" value="Leite em pó"> Leite em pó</label>
+<label><input type="checkbox" value="Nutella" data-extra="1.5"> Nutella +1,50</label>
+
+<button onclick="fecharModal()">Fechar</button>
 
 </div>
 </div>
 
 <script>
 
-let carrinho=[];
-let total=0;
-let frete=0;
+let carrinho=[]
+let total=0
+let frete=0
+let bairro=""
 
 function add(btn,nome){
-let prod=btn.closest(".produto");
-let radio=prod.querySelector("input[type=radio]:checked");
 
-if(!radio){alert("Escolha tamanho");return;}
+let box=btn.parentElement
+let radio=box.querySelector("input[type=radio]:checked")
 
-let preco=Number(radio.dataset.preco);
+if(!radio){alert("Escolha tamanho");return}
 
-let extras=[];
-prod.querySelectorAll("input[type=checkbox]:checked").forEach(e=>{
-preco+=Number(e.dataset.extra||0);
-extras.push(e.value);
-});
+let preco=Number(radio.dataset.preco)
+let extras=[]
+let checks=box.querySelectorAll("input[type=checkbox]:checked")
 
-carrinho.push({nome:nome,preco,detalhes:extras.join(",")});
-total+=preco;
+checks.forEach(c=>{
+preco+=Number(c.dataset.extra||0)
+extras.push(c.value)
+})
 
-render();
-msg();
+carrinho.push({nome,preco,extras})
+total+=preco
+
+render()
+confirmar()
 }
 
-function addMeuAcai(btn){
-let prod=btn.closest(".produto");
-let radio=prod.querySelector("input[type=radio]:checked");
+function addMeu(btn){
 
-if(!radio){alert("Escolha tamanho");return;}
+let box=btn.parentElement
+let radio=box.querySelector("input[type=radio]:checked")
+let checks=document.querySelectorAll("#modal input:checked")
 
-let preco=Number(radio.dataset.preco);
+if(!radio){alert("Escolha tamanho");return}
+if(checks.length==0){alert("Escolha acompanhamento");return}
 
-let extras=[];
-document.querySelectorAll("#modalMeuAcai input:checked").forEach(e=>{
-extras.push(e.value);
-});
+let preco=Number(radio.dataset.preco)
+let extras=[]
 
-carrinho.push({nome:"Meu Açaí",preco,detalhes:extras.join(",")});
-total+=preco;
+checks.forEach(c=>{
+preco+=Number(c.dataset.extra||0)
+extras.push(c.value)
+})
 
-render();
-msg();
-fecharMeuAcai();
+carrinho.push({nome:"Meu Açaí",preco,extras})
+total+=preco
+
+render()
+confirmar()
 }
 
 function render(){
-let ul=document.getElementById("lista-carrinho");
-ul.innerHTML="";
+let lista=document.getElementById("lista")
+lista.innerHTML=""
 
-carrinho.forEach((i,index)=>{
-ul.innerHTML+=`
-<li>${i.nome} - ${i.preco}
-<button onclick="rem(${index})">x</button></li>`;
-});
+carrinho.forEach((i,idx)=>{
+let li=document.createElement("li")
+li.innerHTML=i.nome+" - "+i.preco.toFixed(2)
 
-document.getElementById("total").innerText=(total+frete).toFixed(2);
+let b=document.createElement("button")
+b.innerText="x"
+b.className="btn-remover"
+b.onclick=()=>remover(idx)
+
+li.appendChild(b)
+lista.appendChild(li)
+})
+
+document.getElementById("total").innerText=(total+frete).toFixed(2)
 }
 
-function rem(i){
-total-=carrinho[i].preco;
-carrinho.splice(i,1);
-render();
+function remover(i){
+total-=carrinho[i].preco
+carrinho.splice(i,1)
+render()
 }
 
-function freteChange(e){
-frete=Number(e.value);
-render();
+function confirmar(){
+let c=document.getElementById("confirmacao")
+c.style.display="block"
+setTimeout(()=>c.style.display="none",1500)
 }
 
-function abrirMeuAcai(){
-document.getElementById("modalMeuAcai").style.display="flex";
-}
+function freteCalc(){
+let s=document.getElementById("bairro")
+frete=Number(s.value)
+bairro=s.options[s.selectedIndex].dataset.nome
 
-function fecharMeuAcai(){
-document.getElementById("modalMeuAcai").style.display="none";
-}
-
-function msg(){
-let c=document.getElementById("confirmacao");
-c.style.display="block";
-setTimeout(()=>c.style.display="none",1500);
+document.getElementById("frete").innerText=frete
+render()
 }
 
 function enviar(){
-let msg="Pedido:\n";
+
+let nome=document.getElementById("nome").value
+let end=document.getElementById("endereco").value
+let pag=document.getElementById("pagamento").value
+
+let msg="Pedido Açaí Bottle\n\n"
+
 carrinho.forEach(i=>{
-msg+=`${i.nome} - ${i.preco}\n`;
-});
-window.open("https://wa.me/5579996090459?text="+encodeURIComponent(msg));
+msg+=i.nome+" - "+i.preco+"\n"
+})
+
+msg+="\nFrete: "+frete
+msg+="\nTotal: "+(total+frete)
+msg+="\nCliente: "+nome
+msg+="\nEndereço: "+end
+msg+="\nBairro: "+bairro
+msg+="\nPagamento: "+pag
+
+window.open("https://wa.me/5579996090459?text="+encodeURIComponent(msg))
+}
+
+function abrirModal(){
+document.getElementById("modal").style.display="flex"
+}
+function fecharModal(){
+document.getElementById("modal").style.display="none"
 }
 
 </script>
 
 </body>
 </html>
-
-
 
 
 
