@@ -68,7 +68,7 @@ color:#555;
 margin-bottom:10px;
 }
 
-    .produtos{
+.produtos{
 display:grid;
 grid-template-columns: repeat(3, 1fr);
 gap:20px;
@@ -286,6 +286,19 @@ font-weight:bold;
 background:#5e2b97;
 margin-bottom:10px;
 }
+
+    .container{
+display:grid;
+grid-template-columns: 2fr 1fr;
+gap:20px;
+padding:20px;
+}
+
+@media(max-width:900px){
+.container{
+grid-template-columns:1fr;
+}
+}
     
 </style>
 </head>
@@ -294,15 +307,17 @@ margin-bottom:10px;
 
 <div class="container">
 
-  <div class="lado-produtos">
-    <div class="produtos">
-      <!-- produtos aqui -->
+    <div class="lado-produtos">
+        <section class="produtos">
+            <!-- TODOS OS PRODUTOS AQUI -->
+        </section>
     </div>
-  </div>
 
-  <div class="carrinho">
-    <!-- carrinho aqui -->
-  </div>
+    <div class="lado-carrinho">
+        <div class="carrinho">
+            <!-- SEU CARRINHO -->
+        </div>
+    </div>
 
 </div>
     
@@ -553,6 +568,7 @@ Açaí batido, cremoso e gelado, montado com os complementos da sua escolha.
 </div>
     
 <div id="confirmacao">✔ Item adicionado ao carrinho</div>
+   
     <div class="carrinho">
     <h3>🛒 Seu carrinho</h3>
 
@@ -885,38 +901,34 @@ function removerItem(index) {
     return totalProdutos + freteFinal;
 }
 
+
+    atualizarFrete(); // recalcula sempre
+
 function atualizarCarrinho() {
+
     const lista = document.getElementById("lista-carrinho");
-    const total = document.getElementById("total");
 
     lista.innerHTML = "";
 
     carrinho.forEach((item, index) => {
+
         const li = document.createElement("li");
-        li.style.display = "flex";
-        li.style.justifyContent = "space-between";
-        li.style.alignItems = "center";
-        li.style.marginBottom = "6px";
 
-        const texto = document.createElement("span");
-        texto.innerText = `${item.nome}${item.detalhes ? " (" + item.detalhes + ")" : ""} - R$ ${item.preco.toFixed(2)}`;
+        li.innerText =
+        item.nome +
+        (item.detalhes ? " (" + item.detalhes + ")" : "") +
+        " - R$ " + item.preco.toFixed(2);
 
-        const btn = document.createElement("button");
-        btn.innerText = "×";
-        btn.className = "btn-remover";
-        btn.onclick = () => removerItem(index);
-
-        li.appendChild(texto);
-        li.appendChild(btn);
         lista.appendChild(li);
     });
 
-    total.innerText = (totalProdutos + frete).toFixed(2);
-    document.getElementById("frete").innerText = frete.toFixed(2);
+    let freteFinal = totalProdutos >= 55 ? 0 : frete;
+    let totalFinal = totalProdutos + freteFinal;
+
+    document.getElementById("frete").innerText = freteFinal.toFixed(2);
+    document.getElementById("total").innerText = totalFinal.toFixed(2);
 }
-    atualizarFrete(); // recalcula sempre
-
-
+    
 function atualizarTotais() {
     const totalFinal = totalProdutos + frete;
 
