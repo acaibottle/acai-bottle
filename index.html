@@ -643,7 +643,9 @@ Novo Horizonte – R$ 10
     <option value="10" data-bairro="Novo Horizonte">Novo Horizonte</option>
 </select>
 </div>
-        
+        <p>🚚 Frete: R$ <span id="frete">0.00</span></p>
+<p class="total">💰 Total: R$ <span id="total">0.00</span></p>
+    
     <!-- DADOS DO CLIENTE -->
     <div class="dados-cliente">
         <h4>🧾 Dados do pedido</h4>
@@ -832,55 +834,70 @@ mostrarConfirmacao();
 extrasSelecionados.forEach(e => e.checked = false);
 
 }
-  function adicionarMeuAcai() {
-    const selecionados = document.querySelectorAll(
-        '.acompanhamentos input[type="checkbox"]:checked'
-    );
+ function adicionarMeuAcaiFinal(botao){
+
+    const produto = botao.closest(".produto");
+
+    const tamanhoSelecionado = produto.querySelector("input[type='radio']:checked");
+
+    if (!tamanhoSelecionado) {
+        alert("Escolha o tamanho.");
+        return;
+    }
+
+    const tamanho = tamanhoSelecionado.value;
+    let preco = Number(tamanhoSelecionado.dataset.preco);
+
+    const selecionados = document.querySelectorAll("#modalMeuAcai input:checked");
 
     if (selecionados.length === 0) {
         alert("Escolha pelo menos 1 acompanhamento.");
         return;
     }
 
-    let acompanhamentos = [];
-    let precoFinal = 14;
+    if (selecionados.length > 2) {
+        alert("Máximo 2 acompanhamentos.");
+        return;
+    }
+
+    let extras = [];
 
     selecionados.forEach(item => {
-        acompanhamentos.push(item.value);
-
-        const extra = Number(item.dataset.extra || 0);
-        precoFinal += extra;
+        extras.push(item.value);
+        preco += Number(item.dataset.extra || 0);
     });
 
     carrinho.push({
-        nome: "Meu Açaí",
-        preco: precoFinal,
-        detalhes: acompanhamentos.join(", ")
+        nome: "Meu Açaí " + tamanho + "ml",
+        preco: preco,
+        detalhes: extras.join(", ")
     });
 
-    totalProdutos += precoFinal;
+    totalProdutos += preco;
+
     atualizarCarrinho();
     mostrarConfirmacao();
 
-    // Limpa seleção após adicionar
-    selecionados.forEach(item => item.checked = false);
+    // limpar
+    tamanhoSelecionado.checked = false;
+    selecionados.forEach(e => e.checked = false);
+
+    fecharMeuAcai();
 }
     
-    function atualizarFrete() {
+  function atualizarFrete() {
 
     const select = document.getElementById("bairro");
 
-    if (select.selectedIndex > 0) {
-        const option = select.options[select.selectedIndex];
-        frete = Number(option.value);
-        bairroSelecionado = option.getAttribute("data-bairro");
+    if (select.value) {
+        frete = Number(select.value);
+        bairroSelecionado = select.options[select.selectedIndex].getAttribute("data-bairro");
+    } else {
+        frete = 0;
+        bairroSelecionado = "";
     }
 
-    let freteFinal = totalProdutos >= 55 ? 0 : frete;
-    let totalFinal = totalProdutos + freteFinal;
-
-    document.getElementById("frete").innerText = freteFinal.toFixed(2);
-    document.getElementById("total").innerText = totalFinal.toFixed(2);
+    atualizarCarrinho(); // 🔥 ATUALIZA NA HORA
 }
 
 function adicionarAoCarrinho(nome, preco) {
@@ -914,14 +931,22 @@ function atualizarCarrinho() {
 
         const li = document.createElement("li");
 
-        li.innerText =
-        item.nome +
-        (item.detalhes ? " (" + item.detalhes + ")" : "") +
-        " - R$ " + item.preco.toFixed(2);
+        li.style.display = "flex";
+        li.style.justifyContent = "space-between";
+
+        li.innerHTML = `
+        <span>
+        ${item.nome}
+        ${item.detalhes ? " (" + item.detalhes + ")" : ""}
+        - R$ ${item.preco.toFixed(2)}
+        </span>
+        <button class="btn-remover" onclick="removerItem(${index})">×</button>
+        `;
 
         lista.appendChild(li);
     });
 
+    // 👇 CALCULO CORRETO
     let freteFinal = totalProdutos >= 55 ? 0 : frete;
     let totalFinal = totalProdutos + freteFinal;
 
