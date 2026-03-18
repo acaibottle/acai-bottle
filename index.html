@@ -1,302 +1,959 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
-<meta charset="UTF-8">
-<title>Açaí Bottle</title>
+    <meta charset="UTF-8">   
+    <title>Açai Bottle</title>
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+</head>
 
 <style>
-body{
-font-family:Arial;
-margin:0;
-background:#f4f4f4;
+body { font-family: Arial, sans-serif; margin: 0; background: #f4f4f4; }
+  
+  #confirmacao { position: fixed; bottom: 20px; right: 20px; background: #4CAF50; color: white; padding: 10px 16px; border-radius: 8px; font-weight: bold; display: none; z-index: 999; }
+header {
+    background: linear-gradient(90deg,#5e2b97,#7b3fe4);
+    color: white;
+    text-align: center;
+    padding: 20px;
 }
 
-header{
-background:linear-gradient(90deg,#5e2b97,#7b3fe4);
-color:#fff;
-text-align:center;
-padding:20px;
+.logo {
+    width: 150px;
+    border-radius: 15px;
+    margin-bottom: 10px;
 }
 
-.logo{width:140px;border-radius:12px}
-
-.container{
-display:flex;
-gap:20px;
-padding:20px;
-align-items:flex-start;
-}
-
-.lado-produtos{
-flex:3;
-}
-
-.carrinho{
-flex:1;
-background:#fff;
-padding:15px;
-border-radius:10px;
-box-shadow:0 4px 12px rgba(0,0,0,0.1);
-position:sticky;
-top:10px;
+header h1 {
+    margin: 0;
+    font-size: 28px;
 }
 
 .produtos{
 display:grid;
-grid-template-columns:repeat(3,1fr);
+grid-template-columns: repeat(3, 1fr);
 gap:20px;
-}
-
-@media(max-width:900px){
-.produtos{grid-template-columns:repeat(2,1fr);}
-.container{flex-direction:column;}
-}
-
-@media(max-width:500px){
-.produtos{grid-template-columns:1fr;}
 }
 
 .produto{
 background:#fff;
-padding:12px;
+padding:15px;
 border-radius:12px;
-box-shadow:0 4px 10px rgba(0,0,0,0.1);
+box-shadow:0 4px 12px rgba(0,0,0,0.1);
 display:flex;
 flex-direction:column;
+justify-content:space-between;
+transition:0.2s;
+}
+
+.produto:hover{
+transform:translateY(-3px);
 }
 
 .produto img{
 width:100%;
 height:150px;
 object-fit:cover;
-border-radius:8px;
+border-radius:10px;
+margin-bottom:10px;
 }
 
-.tamanho, .acompanhamentos{
+.produto h3{
+margin:5px 0;
+}
+
+.produto p{
+font-size:13px;
+color:#555;
+margin-bottom:10px;
+}
+
+    .produtos{
+display:grid;
+grid-template-columns: repeat(3, 1fr);
+gap:20px;
+}
+
+@media (max-width: 900px){
+.produtos{
+grid-template-columns: repeat(2, 1fr);
+}
+}
+
+@media (max-width: 500px){
+.produtos{
+grid-template-columns: 1fr;
+}
+}
+    
+    .bloco{
 background:#f8f8f8;
 padding:8px;
 border-radius:8px;
-margin-top:8px;
+margin-bottom:8px;
 font-size:13px;
+}
+
+.bloco strong{
+display:block;
+margin-bottom:5px;
+}
+
+.bloco label{
+display:block;
+margin-bottom:4px;
+cursor:pointer;
+}
+    
+.acompanhamentos{
+display:flex;
+flex-direction:column;
+gap:6px;
+margin-top:8px;
 }
 
 .acompanhamentos label{
 display:flex;
-gap:5px;
-margin-bottom:5px;
+align-items:center;
+gap:6px;
+background:#f8f8f8;
+padding:6px 8px;
+border-radius:6px;
+cursor:pointer;
+transition:0.2s;
+font-size:13px;
 }
 
+.acompanhamentos label:hover{
+background:#eee;
+}
+
+    .acompanhamentos input{
+transform:scale(1.1);
+cursor:pointer;
+}
+
+    
+    
 button{
-background:#25D366;
+background:linear-gradient(90deg,#25D366,#1ebe5d);
 color:#fff;
 border:none;
 padding:10px;
 border-radius:8px;
-margin-top:10px;
 cursor:pointer;
+font-weight:bold;
+transition:0.2s;
 }
 
-.total-box{
-margin-top:10px;
-border-top:1px solid #ddd;
-padding-top:10px;
+button:hover{
+transform:scale(1.03);
+}
+    
+.carrinho {
+    margin-top: 20px;
+    padding: 15px;
+    background: #f9f9f9;
+    border-radius: 10px;
+}
+
+.total {
+    border-top: 1px solid #ddd;
+    padding-top: 8px;
+    margin-top: 10px;
+    font-weight: bold;
+    text-align: right;
+}
+
+.dados-cliente {
+    margin-top: 15px;
+}
+
+.dados-cliente h4 {
+    margin-bottom: 8px;
+}
+
+.dados-cliente input,
+.dados-cliente select {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 8px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+}
+
+    .tamanho {
+    text-align: left;
+    margin-top: 10px;
+    font-size: 14px;
+}
+
+.tamanho label {
+    display: block;
+    margin-bottom: 4px;
+}
+    
+.btn-remover {
+    width: 20px;
+    height: 20px;
+    min-width: 20px;
+    min-height: 20px;
+    padding: 0;
+    font-size: 11px;
+    line-height: 20px;
+    border-radius: 50%;
+    background: #e53935;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    text-align: center;
+}
+#confirmacao {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: #4CAF50;
+    color: #fff;
+    padding: 10px 16px;
+    border-radius: 8px;
+    font-weight: bold;
+    display: none;
+    z-index: 9999;
+}
+    .modal-frete{
+display:none;
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:rgba(0,0,0,0.5);
+z-index:1000;
+justify-content:center;
+align-items:center;
+}
+
+.modal-conteudo{
+background:white;
+padding:25px;
+border-radius:10px;
+max-width:350px;
+line-height:1.6;
+position:relative;
+}
+
+.fechar{
+position:absolute;
+top:10px;
+right:12px;
+cursor:pointer;
 font-weight:bold;
 }
 
+.btn-frete{
+background:#5e2b97;
+margin-bottom:10px;
+}
+    
 </style>
 </head>
 
 <body>
 
-<header>
-<img src="logo.png" class="logo">
-<h1>Açaí Bottle</h1>
-</header>
-
 <div class="container">
 
-<div class="lado-produtos">
+  <div class="lado-produtos">
+    <div class="produtos">
+      <!-- produtos aqui -->
+    </div>
+  </div>
 
-<div class="produtos">
+  <div class="carrinho">
+    <!-- carrinho aqui -->
+  </div>
 
-<!-- TRADICIONAL -->
+</div>
+    
+    <div id="confirmacao">✔ Item adicionado ao carrinho</div>
+<header>
+    <img src="./logo.png" alt="Logo Açai Bottle" class="logo">
+    <h1>Açai Bottle</h1>
+</header>
+
+<section class="produtos">
+
 <div class="produto">
+
 <img src="img/tradicional.jpg">
+
 <h3>Tradicional</h3>
 
+<p class="descricao">
+Açaí batido, cremoso e gelado. 
+O clássico no ponto certo.
+</p>
+
 <div class="tamanho">
-<label><input type="radio" name="tradicional" value="300" data-preco="12">300ml R$12</label>
-<label><input type="radio" name="tradicional" value="500" data-preco="18">500ml R$18</label>
+
+<strong>Escolha o tamanho:</strong>
+
+<label>
+<input type="radio" name="tamanho-tradicional" value="300" data-preco="12">
+300ml (R$12)
+</label>
+
+<label>
+<input type="radio" name="tamanho-tradicional" value="500" data-preco="18">
+500ml (R$18)
+</label>
+
 </div>
 
 <div class="acompanhamentos">
-<label><input type="checkbox" value="Leite condensado" data-extra="1">Leite condensado</label>
-<label><input type="checkbox" value="Amendoim" data-extra="1">Amendoim</label>
+<strong>Adicionais:</strong>
+
+<label>
+<input type="checkbox" value="Leite condensado" data-extra="1">
+Leite condensado (+R$1)
+</label>
+
+<label>
+<input type="checkbox" value="Amendoim triturado" data-extra="1">
+Amendoim triturado (+R$1)
+</label>
 </div>
 
-<button onclick="add(this,'Tradicional')">Adicionar</button>
+<button onclick="adicionarProdutoComTamanho(this,'Tradicional')">
+Adicionar
+</button>
+
 </div>
 
-<!-- NINHO -->
-<div class="produto">
+   <div class="produto">
+
 <img src="img/ninho.jpg">
+
 <h3>Ninho</h3>
 
+<p class="descricao">
+Açaí batido, cremoso e gelado, montado em camadas com creme de leite ninho.
+Suave, doce e irresistível.
+</p>
+
 <div class="tamanho">
-<label><input type="radio" name="ninho" value="300" data-preco="14">300ml R$14</label>
-<label><input type="radio" name="ninho" value="500" data-preco="21">500ml R$21</label>
+
+<strong>Escolha o tamanho:</strong>
+
+<label>
+<input type="radio" name="tamanho-ninho" value="300" data-preco="14">
+300ml (R$14)
+</label>
+
+<label>
+<input type="radio" name="tamanho-ninho" value="500" data-preco="21">
+500ml (R$21)
+</label>
+
 </div>
 
-<button onclick="add(this,'Ninho')">Adicionar</button>
+<button onclick="adicionarProdutoComTamanho(this,'Ninho')">
+Adicionar
+</button>
+
 </div>
 
-<!-- MARACUJÁ -->
 <div class="produto">
+
 <img src="img/maracuja.jpg">
+
 <h3>Maracujá</h3>
 
+<p class="descricao">
+Açaí batido, cremoso e gelado, montado em camadas com creme de maracujá.
+Equilíbrio perfeito entre doce e azedinho.
+</p>
+
 <div class="tamanho">
-<label><input type="radio" name="maracuja" value="300" data-preco="14">300ml R$14</label>
-<label><input type="radio" name="maracuja" value="500" data-preco="21">500ml R$21</label>
+
+<strong>Escolha o tamanho:</strong>
+
+<label>
+<input type="radio" name="tamanho-maracuja" value="300" data-preco="14">
+300ml (R$14)
+</label>
+
+<label>
+<input type="radio" name="tamanho-maracuja" value="500" data-preco="21">
+500ml (R$21)
+</label>
+
 </div>
 
-<button onclick="add(this,'Maracujá')">Adicionar</button>
-</div>
+<button onclick="adicionarProdutoComTamanho(this,'Maracujá')">
+Adicionar
+</button>
 
-<!-- PAÇOCA -->
+</div>
+    
 <div class="produto">
+
 <img src="img/pacoca.jpg">
+
 <h3>Paçoca</h3>
 
+<p class="descricao">
+Açaí batido, cremoso e gelado, montado em camadas com creme de paçoca.
+Sabor marcante e irresistivelmente brasileiro.
+</p>
+
 <div class="tamanho">
-<label><input type="radio" name="pacoca" value="300" data-preco="14">300ml R$14</label>
-<label><input type="radio" name="pacoca" value="500" data-preco="21">500ml R$21</label>
-</div>
 
-<button onclick="add(this,'Paçoca')">Adicionar</button>
-</div>
+<strong>Escolha o tamanho:</strong>
 
-<!-- NUTELLA -->
+<label>
+<input type="radio" name="tamanho-pacoca" value="300" data-preco="14">
+300ml (R$14)
+</label>
+
+<label>
+<input type="radio" name="tamanho-pacoca" value="500" data-preco="21">
+500ml (R$21)
+</label>
+
+<button onclick="adicionarProdutoComTamanho(this,'Paçoca')">
+Adicionar
+</button>
+
+</div>
+    
 <div class="produto">
+
 <img src="img/nutella.jpg">
+
 <h3>Nutella</h3>
 
+<p class="descricao">
+Açaí batido, cremoso e gelado, montado em camadas com Nutella.
+Cremoso, intenso e irresistível.
+</p>
+
 <div class="tamanho">
-<label><input type="radio" name="nutella" value="300" data-preco="16">300ml R$16</label>
-<label><input type="radio" name="nutella" value="500" data-preco="26">500ml R$26</label>
+
+<strong>Escolha o tamanho:</strong>
+
+<label>
+<input type="radio" name="tamanho-nutella" value="300" data-preco="16.5">
+300ml (R$16)
+</label>
+
+<label>
+<input type="radio" name="tamanho-nutella" value="500" data-preco="26">
+500ml (R$26)
+</label>
+
 </div>
 
-<button onclick="add(this,'Nutella')">Adicionar</button>
+
+<button onclick="adicionarProdutoComTamanho(this,'Nutella')">
+Adicionar
+</button>
+
 </div>
 
-<!-- MEU AÇAÍ -->
 <div class="produto">
+
 <img src="img/meu-acai.jpg">
+
 <h3>Meu Açaí</h3>
 
+<p class="descricao">
+Açaí batido, cremoso e gelado, montado com os complementos da sua escolha.
+</p>
+
 <div class="tamanho">
-<label><input type="radio" name="meuacai" value="300" data-preco="14">300ml R$14</label>
-<label><input type="radio" name="meuacai" value="500" data-preco="21">500ml R$21</label>
+
+<strong>Escolha o tamanho:</strong>
+
+<label>
+<input type="radio" name="tamanho-meuacai" value="300" data-preco="14">
+300ml (R$14)
+</label>
+
+<label>
+<input type="radio" name="tamanho-meuacai" value="500" data-preco="21">
+500ml (R$21)
+</label>
+
 </div>
 
-<button onclick="add(this,'Meu Açaí')">Adicionar</button>
-</div>
+<button onclick="abrirMeuAcai()">🍧 Escolher acompanhamentos</button>
+<div id="modalMeuAcai" class="modal-frete">
+
+<div class="modal-conteudo">
+
+<span class="fechar" onclick="fecharMeuAcai()">✖</span>
+
+<h3>Escolha até 2 acompanhamentos</h3>
+
+<label><input type="checkbox" value="Amendoim triturado" onchange="limitarMeuAcai(this)"> Amendoim triturado</label>
+<label><input type="checkbox" value="Paçoca" onchange="limitarMeuAcai(this)"> Paçoca</label>
+<label><input type="checkbox" value="Leite em pó" onchange="limitarMeuAcai(this)"> Leite em pó</label>
+<label><input type="checkbox" value="Leite condensado" onchange="limitarMeuAcai(this)"> Leite condensado</label>
+<label><input type="checkbox" value="Creme de paçoca" onchange="limitarMeuAcai(this)"> Creme de paçoca</label>
+<label><input type="checkbox" value="Creme de maracujá" onchange="limitarMeuAcai(this)"> Creme de maracujá</label>
+<label><input type="checkbox" value="Creme de ninho" onchange="limitarMeuAcai(this)"> Creme de ninho</label>
+<label><input type="checkbox" value="Nutella (+2,00)" data-extra="1.5" onchange="limitarMeuAcai(this)"> Nutella (+2,00)</label>
 
 </div>
 </div>
+<button onclick="adicionarMeuAcaiFinal(this)">
+Adicionar Meu Açaí
+</button>
 
-<!-- CARRINHO -->
-<div class="carrinho">
+</div>
+    
+<div id="confirmacao">✔ Item adicionado ao carrinho</div>
+    <div class="carrinho">
+    <h3>🛒 Seu carrinho</h3>
 
-<h3>🛒 Carrinho</h3>
-<ul id="lista"></ul>
+    <ul id="lista-carrinho"></ul>
+        
+   <div id="modalFrete" class="modal-frete">
 
-<select id="bairro" onchange="calcFrete()">
-<option value="">Bairro</option>
-<option value="3">Cidade Nova</option>
-<option value="5">Centro</option>
-<option value="7">Jardins</option>
+<div class="modal-conteudo">
+
+<span class="fechar" onclick="fecharFrete()">✖</span>
+
+<h3>🚚 Tabela de Frete</h3>
+
+<strong>Aracaju</strong><br>
+Cidade Nova / Dom Luciano – R$ 3<br>
+Japãozinho – R$ 3<br>
+18 do Forte – R$ 3<br>
+Santos Dumont – R$ 3<br>
+Santo Antônio – R$ 4<br>
+Bugio – R$ 4<br>
+Soledade – R$ 4<br>
+Bairro Industrial – R$ 5<br>
+Porto Dantas – R$ 5<br>
+Centro – R$ 5<br>
+América – R$ 5<br>
+São José – R$ 6<br>
+Jardins – R$ 7<br><br>
+
+<strong>Nossa Senhora do Socorro</strong><br>
+João Alves – R$ 6<br>
+Fernando Collor – R$ 8<br>
+Marcos Freire I – R$ 7<br>
+Marcos Freire II – R$ 6<br>
+Piabeta – R$ 10<br>
+Albano Franco – R$ 10<br>
+Novo Horizonte – R$ 10
+
+</div>
+</div>
+
+        <button onclick="abrirFrete()" class="btn-frete">
+📦 Ver tabela de frete
+</button>
+        <select id="bairro" onchange="atualizarFrete()">
+    <option value="">Selecione o bairro</option>
+
+    <option value="3" data-bairro="Cidade Nova / Dom Luciano">Cidade Nova / Dom Luciano</option>
+    <option value="3" data-bairro="Japãozinho">Japãozinho</option>
+    <option value="3" data-bairro="18 do Forte">18 do Forte</option>
+    <option value="3" data-bairro="Santos Dumont">Santos Dumont</option>
+
+    <option value="4" data-bairro="Santo Antônio">Santo Antônio</option>
+    <option value="4" data-bairro="Bugio">Bugio</option>
+    <option value="4" data-bairro="Soledade">Soledade</option>
+
+    <option value="5" data-bairro="Bairro Industrial">Bairro Industrial</option>
+    <option value="5" data-bairro="Porto Dantas">Porto Dantas</option>
+    <option value="5" data-bairro="Centro">Centro</option>
+    <option value="5" data-bairro="América">América</option>
+
+    <option value="6" data-bairro="São José">São José</option>
+    <option value="7" data-bairro="Jardins">Jardins</option>
+
+    <option disabled>────────────</option>
+
+    <option value="6" data-bairro="João Alves">João Alves</option>
+    <option value="8" data-bairro="Fernando Collor">Fernando Collor</option>
+    <option value="7" data-bairro="Marcos Freire I">Marcos Freire I</option>
+    <option value="6" data-bairro="Marcos Freire II">Marcos Freire II</option>
+    <option value="10" data-bairro="Piabeta">Piabeta</option>
+    <option value="10" data-bairro="Albano Franco">Albano Franco</option>
+    <option value="10" data-bairro="Novo Horizonte">Novo Horizonte</option>
 </select>
-
-<div class="total-box">
-Frete: R$ <span id="frete">0</span><br>
-Total: R$ <span id="total">0</span>
 </div>
+        
+    <!-- DADOS DO CLIENTE -->
+    <div class="dados-cliente">
+        <h4>🧾 Dados do pedido</h4>
+<input 
+    type="text" 
+    id="enderecoCliente" 
+    placeholder="Endereço de entrega"
+    onblur="calcularFretePorEndereco()"
+>
+        <input type="text" id="nomeCliente" placeholder="Seu nome">
 
-<button onclick="pedido()">Enviar Pedido</button>
+        <select id="pagamento">
 
-</div>
-
-</div>
+            <option value="">Forma de pagamento</option>
+            <option value="Pix">Pix</option>
+            <option value="Dinheiro">Dinheiro</option>
+            <option value="Cartão">Cartão</option>
+        </select>
+        <div class="finalizar">
+    <button onclick="enviarPedido()">📲 Enviar pedido no WhatsApp</button>
+    </div>
 
 <script>
-let carrinho=[];
-let total=0;
-let frete=0;
+let carrinho = [];
+let totalProdutos = 0;
+let frete = 0;
+let bairroSelecionado = "";
 
-function add(btn,nome){
+function adicionarProdutoComTamanho(botao, nome) {
 
-let box=btn.closest(".produto");
-let radio=box.querySelector("input[type=radio]:checked");
+const produto = botao.closest(".produto");
 
-if(!radio){alert("Escolha tamanho");return;}
+// pegar tamanho selecionado
+const tamanhoSelecionado = produto.querySelector("input[type='radio']:checked");
 
-let preco=Number(radio.dataset.preco);
+if (!tamanhoSelecionado) {
+    alert("Escolha o tamanho do açaí.");
+    return;
+}
 
-let extras=box.querySelectorAll("input[type=checkbox]:checked");
-let nomes=[];
+const tamanho = tamanhoSelecionado.value;
+let precoBase = Number(tamanhoSelecionado.dataset.preco);
 
-extras.forEach(e=>{
-preco+=Number(e.dataset.extra||0);
-nomes.push(e.value);
+// pegar adicionais
+const extrasSelecionados = produto.querySelectorAll("input[type='checkbox']:checked");
+
+let extras = [];
+
+extrasSelecionados.forEach(extra => {
+    precoBase += Number(extra.dataset.extra || 0);
+    extras.push(extra.value);
 });
 
-carrinho.push({nome:nome+" "+radio.value+"ml",preco,det:nomes.join(",")});
-total+=preco;
-
-render();
-}
-
-function render(){
-
-let lista=document.getElementById("lista");
-lista.innerHTML="";
-
-carrinho.forEach((i,idx)=>{
-lista.innerHTML+=`<li>${i.nome} - R$${i.preco} <button onclick="rem(${idx})">x</button></li>`;
+carrinho.push({
+    nome: nome + " " + tamanho + "ml",
+    preco: precoBase,
+    detalhes: extras.join(", ")
 });
 
-calcFrete();
+totalProdutos += precoBase;
+
+atualizarCarrinho();
+mostrarConfirmacao();
+
+// limpar seleção
+tamanhoSelecionado.checked = false;
+extrasSelecionados.forEach(e => e.checked = false);
+
+}
+    function abrirMeuAcai(){
+document.getElementById("modalMeuAcai").style.display="flex";
 }
 
-function rem(i){
-total-=carrinho[i].preco;
-carrinho.splice(i,1);
-render();
+function fecharMeuAcai(){
+document.getElementById("modalMeuAcai").style.display="none";
+}
+    function limitarMeuAcai(checkbox){
+
+const selecionados = document.querySelectorAll("#modalMeuAcai input:checked");
+
+if(selecionados.length > 2){
+checkbox.checked = false;
+alert("Você pode escolher no máximo 2 acompanhamentos.");
 }
 
-function calcFrete(){
+}
+    function controlarAcompanhamentos(checkbox) {
+    const selecionados = document.querySelectorAll(
+        '.acompanhamentos input[type="checkbox"]:checked'
+    );
 
-let sel=document.getElementById("bairro");
-
-frete = sel.value ? Number(sel.value) : 0;
-
-let totalFinal = total + frete;
-
-document.getElementById("frete").innerText=frete.toFixed(2);
-document.getElementById("total").innerText=totalFinal.toFixed(2);
+    if (selecionados.length > 2) {
+        checkbox.checked = false;
+        alert("Você pode escolher no máximo 2 acompanhamentos.");
+    }
+}
+    function abrirFrete(){
+document.getElementById("modalFrete").style.display="flex";
 }
 
-function pedido(){
-alert("Pedido enviado (simulação)");
+function fecharFrete(){
+document.getElementById("modalFrete").style.display="none";
 }
+    function adicionarMeuAcaiFinal(botao){
+
+const produto = botao.closest(".produto");
+
+// tamanho
+const tamanhoSelecionado = produto.querySelector("input[type='radio']:checked");
+
+if (!tamanhoSelecionado) {
+alert("Escolha o tamanho.");
+return;
+}
+
+const tamanho = tamanhoSelecionado.value;
+let preco = Number(tamanhoSelecionado.dataset.preco);
+
+// acompanhamentos
+const selecionados = document.querySelectorAll("#modalMeuAcai input:checked");
+
+if(selecionados.length === 0){
+alert("Escolha pelo menos 1 acompanhamento.");
+return;
+}
+
+let extras = [];
+
+selecionados.forEach(item => {
+extras.push(item.value);
+preco += Number(item.dataset.extra || 0);
+});
+
+// adicionar ao carrinho
+carrinho.push({
+nome: "Meu Açaí " + tamanho + "ml",
+preco: preco,
+detalhes: extras.join(", ")
+});
+
+totalProdutos += preco;
+
+atualizarCarrinho();
+mostrarConfirmacao();
+
+// limpar
+tamanhoSelecionado.checked = false;
+selecionados.forEach(e => e.checked = false);
+
+fecharMeuAcai();
+
+}
+
+function adicionarProduto(botao, nome, precoBase) {
+
+const produto = botao.closest(".produto");
+const extrasSelecionados = produto.querySelectorAll("input[type='checkbox']:checked");
+
+let precoFinal = precoBase;
+let extras = [];
+
+extrasSelecionados.forEach(extra => {
+
+extras.push(extra.value);
+
+const extraPreco = Number(extra.dataset.extra || 0);
+
+precoFinal += extraPreco;
+
+});
+
+carrinho.push({
+
+nome: nome,
+preco: precoFinal,
+detalhes: extras.join(", ")
+
+});
+
+totalProdutos += precoFinal;
+
+atualizarCarrinho();
+
+mostrarConfirmacao();
+
+extrasSelecionados.forEach(e => e.checked = false);
+
+}
+  function adicionarMeuAcai() {
+    const selecionados = document.querySelectorAll(
+        '.acompanhamentos input[type="checkbox"]:checked'
+    );
+
+    if (selecionados.length === 0) {
+        alert("Escolha pelo menos 1 acompanhamento.");
+        return;
+    }
+
+    let acompanhamentos = [];
+    let precoFinal = 14;
+
+    selecionados.forEach(item => {
+        acompanhamentos.push(item.value);
+
+        const extra = Number(item.dataset.extra || 0);
+        precoFinal += extra;
+    });
+
+    carrinho.push({
+        nome: "Meu Açaí",
+        preco: precoFinal,
+        detalhes: acompanhamentos.join(", ")
+    });
+
+    totalProdutos += precoFinal;
+    atualizarCarrinho();
+    mostrarConfirmacao();
+
+    // Limpa seleção após adicionar
+    selecionados.forEach(item => item.checked = false);
+}
+    
+    function atualizarFrete() {
+
+    const select = document.getElementById("bairro");
+
+    if (select.selectedIndex > 0) {
+        const option = select.options[select.selectedIndex];
+        frete = Number(option.value);
+        bairroSelecionado = option.getAttribute("data-bairro");
+    }
+
+    let freteFinal = totalProdutos >= 55 ? 0 : frete;
+    let totalFinal = totalProdutos + freteFinal;
+
+    document.getElementById("frete").innerText = freteFinal.toFixed(2);
+    document.getElementById("total").innerText = totalFinal.toFixed(2);
+}
+
+function adicionarAoCarrinho(nome, preco) {
+    carrinho.push({ nome, preco });
+    totalProdutos += preco;
+    atualizarCarrinho();
+    mostrarConfirmacao();
+}
+    
+function removerItem(index) {
+    totalProdutos -= carrinho[index].preco;
+    carrinho.splice(index, 1);
+    atualizarCarrinho();
+}
+
+    function calcularTotalFinal() {
+    let freteFinal = totalProdutos >= 55 ? 0 : frete;
+    return totalProdutos + freteFinal;
+}
+
+function atualizarCarrinho() {
+    const lista = document.getElementById("lista-carrinho");
+    const total = document.getElementById("total");
+
+    lista.innerHTML = "";
+
+    carrinho.forEach((item, index) => {
+        const li = document.createElement("li");
+        li.style.display = "flex";
+        li.style.justifyContent = "space-between";
+        li.style.alignItems = "center";
+        li.style.marginBottom = "6px";
+
+        const texto = document.createElement("span");
+        texto.innerText = `${item.nome}${item.detalhes ? " (" + item.detalhes + ")" : ""} - R$ ${item.preco.toFixed(2)}`;
+
+        const btn = document.createElement("button");
+        btn.innerText = "×";
+        btn.className = "btn-remover";
+        btn.onclick = () => removerItem(index);
+
+        li.appendChild(texto);
+        li.appendChild(btn);
+        lista.appendChild(li);
+    });
+
+    total.innerText = (totalProdutos + frete).toFixed(2);
+    document.getElementById("frete").innerText = frete.toFixed(2);
+}
+    atualizarFrete(); // recalcula sempre
+
+
+function atualizarTotais() {
+    const totalFinal = totalProdutos + frete;
+
+    document.getElementById("frete").innerText = frete.toFixed(2);
+    document.getElementById("total").innerText = totalFinal.toFixed(2);
+}
+    
+function mostrarConfirmacao() {
+    const msg = document.getElementById("confirmacao");
+    msg.style.display = "block";
+
+    setTimeout(() => {
+        msg.style.display = "none";
+    }, 1500);
+}
+
+function enviarPedido() {
+
+    const nome = document.getElementById("nomeCliente").value;
+    const pagamento = document.getElementById("pagamento").value;
+    const endereco = document.getElementById("enderecoCliente").value;
+
+    if (carrinho.length === 0) {
+        alert("Seu carrinho está vazio.");
+        return;
+    }
+
+    if (!nome || !pagamento || !endereco || !bairroSelecionado) {
+        alert("Preencha todos os dados e selecione o bairro.");
+        return;
+    }
+
+    let freteFinal = totalProdutos >= 55 ? 0 : frete;
+    let totalFinal = totalProdutos + freteFinal;
+
+    let mensagem = `🟣 *Pedido - Açaí Bottle* 🟣\n\n`;
+    mensagem += `👤 Cliente: ${nome}\n`;
+    mensagem += `📍 Endereço: ${endereco}\n`;
+    mensagem += `📌 Bairro: ${bairroSelecionado}\n`;
+    mensagem += `💳 Pagamento: ${pagamento}\n\n`;
+
+    mensagem += `🛒 Itens:\n`;
+
+    mensagem += `🛒 Itens:\n`;
+
+carrinho.forEach(item => {
+
+    if (item.detalhes) {
+        mensagem += `• ${item.nome} (${item.detalhes}) - R$ ${item.preco.toFixed(2)}\n`;
+    } else {
+        mensagem += `• ${item.nome} - R$ ${item.preco.toFixed(2)}\n`;
+    }
+
+});
+
+    if (freteFinal === 0 && totalProdutos >= 55) {
+        mensagem += `\n🚚 Frete: GRÁTIS 🎉`;
+    } else {
+        mensagem += `\n🚚 Taxa de entrega: R$ ${freteFinal.toFixed(2)}`;
+    }
+
+    mensagem += `\n💰 Total: R$ ${totalFinal.toFixed(2)}\n\n`;
+
+    const mapsLink = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(endereco)}`;
+    mensagem += `🗺️ Localização: ${mapsLink}`;
+
+    const numeroLoja = "5579996090459";
+    const url = `https://wa.me/${numeroLoja}?text=${encodeURIComponent(mensagem)}`;
+
+    window.open(url, "_blank");
+}
+
 </script>
 
+<!-- HTML -->
 </body>
+<script>
+    // JS aqui
+</script>
 </html>
-
-
-
-
-
-
