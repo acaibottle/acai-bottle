@@ -11,11 +11,13 @@
 body { font-family: Arial, sans-serif; margin: 0; background: #f4f4f4; }
   
   #confirmacao { position: fixed; bottom: 20px; right: 20px; background: #4CAF50; color: white; padding: 10px 16px; border-radius: 8px; font-weight: bold; display: none; z-index: 999; }
-header {
-    background: linear-gradient(90deg,#5e2b97,#7b3fe4);
-    color: white;
-    text-align: center;
-    padding: 20px;
+
+    header{
+background:linear-gradient(90deg,#5e2b97,#7b3fe4);
+color:white;
+text-align:center;
+padding:25px;
+box-shadow:0 4px 10px rgba(0,0,0,0.1);
 }
 
 .logo {
@@ -38,24 +40,24 @@ gap:20px;
 .produto{
 background:#fff;
 padding:15px;
-border-radius:12px;
-box-shadow:0 4px 12px rgba(0,0,0,0.1);
+border-radius:16px;
+box-shadow:0 6px 18px rgba(0,0,0,0.08);
 display:flex;
 flex-direction:column;
-justify-content:space-between;
+gap:8px;
 transition:0.2s;
 }
 
 .produto:hover{
-transform:translateY(-3px);
+transform:translateY(-5px);
+box-shadow:0 10px 25px rgba(0,0,0,0.12);
 }
 
 .produto img{
 width:100%;
 height:150px;
 object-fit:cover;
-border-radius:10px;
-margin-bottom:10px;
+border-radius:12px;
 }
 
 .produto h3{
@@ -86,19 +88,18 @@ grid-template-columns: 1fr;
 }
 }
     
-    .bloco{
+.bloco{
 background:#f8f8f8;
-padding:8px;
-border-radius:8px;
-margin-bottom:8px;
-font-size:13px;
+padding:10px;
+border-radius:10px;
+margin-top:8px;
 }
 
 .bloco strong{
 display:block;
 margin-bottom:5px;
 }
-
+    
 .bloco label{
 display:block;
 margin-bottom:4px;
@@ -116,16 +117,15 @@ margin-top:8px;
 display:flex;
 align-items:center;
 gap:6px;
-background:#f8f8f8;
+background:#eee;
 padding:6px 8px;
-border-radius:6px;
+border-radius:8px;
 cursor:pointer;
 transition:0.2s;
-font-size:13px;
 }
 
 .acompanhamentos label:hover{
-background:#eee;
+background:#ddd;
 }
 
     .acompanhamentos input{
@@ -169,10 +169,10 @@ cursor:pointer;
     
 button{
 background:linear-gradient(90deg,#25D366,#1ebe5d);
-color:#fff;
 border:none;
-padding:10px;
-border-radius:8px;
+color:#fff;
+padding:12px;
+border-radius:10px;
 cursor:pointer;
 font-weight:bold;
 transition:0.2s;
@@ -182,19 +182,21 @@ button:hover{
 transform:scale(1.03);
 }
     
-.carrinho {
-    margin-top: 20px;
-    padding: 15px;
-    background: #f9f9f9;
-    border-radius: 10px;
+.carrinho{
+background:#fff;
+padding:20px;
+border-radius:16px;
+box-shadow:0 6px 18px rgba(0,0,0,0.08);
+position:sticky;
+top:20px;
+height:fit-content;
 }
 
-.total {
-    border-top: 1px solid #ddd;
-    padding-top: 8px;
-    margin-top: 10px;
-    font-weight: bold;
-    text-align: right;
+.total{
+font-size:18px;
+font-weight:bold;
+margin-top:10px;
+color:#5e2b97;
 }
 
 .dados-cliente {
@@ -287,11 +289,13 @@ background:#5e2b97;
 margin-bottom:10px;
 }
 
-    .container{
+.container{
 display:grid;
 grid-template-columns: 2fr 1fr;
-gap:20px;
+gap:25px;
 padding:20px;
+max-width:1200px;
+margin:auto;
 }
 
 @media(max-width:900px){
@@ -340,8 +344,7 @@ Açaí batido, cremoso e gelado.
 O clássico no ponto certo.
 </p>
 
-<div class="tamanho">
-
+<div class="bloco">
 <strong>Escolha o tamanho:</strong>
 
 <label>
@@ -356,9 +359,9 @@ O clássico no ponto certo.
 
 </div>
 
-<div class="acompanhamentos">
+<div class="bloco acompanhamentos">
 <strong>Adicionais:</strong>
-
+    
 <label>
 <input type="checkbox" value="Leite condensado" data-extra="1">
 Leite condensado (+R$1)
