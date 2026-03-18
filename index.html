@@ -35,8 +35,9 @@ header h1 {
 display:grid;
 grid-template-columns: repeat(3, 1fr);
 gap:20px;
+padding:20px;
 }
-
+    
 .produto{
 background:#fff;
 padding:15px;
@@ -304,11 +305,13 @@ grid-template-columns:1fr;
 }
 }
     
+<style>
+/* só CSS aqui */
 </style>
+
 </head>
-
 <body>
-
+    
 <div class="container">
 
     <div class="lado-produtos">
@@ -458,6 +461,7 @@ Sabor marcante e irresistivelmente brasileiro.
 
 <div class="tamanho">
 
+    
 <strong>Escolha o tamanho:</strong>
 
 <label>
@@ -469,6 +473,8 @@ Sabor marcante e irresistivelmente brasileiro.
 <input type="radio" name="tamanho-pacoca" value="500" data-preco="21">
 500ml (R$21)
 </label>
+
+    </div>
 
 <button onclick="adicionarProdutoComTamanho(this,'Paçoca')">
 Adicionar
