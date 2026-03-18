@@ -285,20 +285,6 @@ Suave, doce e irresistível.
 
 </div>
 
-<div class="acompanhamentos">
-
-<label>
-<input type="checkbox" value="Leite condensado" data-extra="1">
-Leite condensado (+R$1)
-</label>
-
-<label>
-<input type="checkbox" value="Amendoim triturado" data-extra="1">
-Amendoim triturado (+R$1)
-</label>
-
-</div>
-
 <button onclick="adicionarProdutoComTamanho(this,'Ninho')">
 Adicionar
 </button>
@@ -328,20 +314,6 @@ Equilíbrio perfeito entre doce e azedinho.
 <label>
 <input type="radio" name="tamanho-maracuja" value="500" data-preco="21">
 500ml (R$21)
-</label>
-
-</div>
-
-<div class="acompanhamentos">
-
-<label>
-<input type="checkbox" value="Leite condensado" data-extra="1">
-Leite condensado (+R$1)
-</label>
-
-<label>
-<input type="checkbox" value="Amendoim triturado" data-extra="1">
-Amendoim triturado (+R$1)
 </label>
 
 </div>
@@ -376,22 +348,6 @@ Sabor marcante e irresistivelmente brasileiro.
 <input type="radio" name="tamanho-pacoca" value="500" data-preco="21">
 500ml (R$21)
 </label>
-
-</div>
-
-<div class="acompanhamentos">
-
-<label>
-<input type="checkbox" value="Leite condensado" data-extra="1">
-Leite condensado (+R$1)
-</label>
-
-<label>
-<input type="checkbox" value="Amendoim triturado" data-extra="1">
-Amendoim triturado (+R$1)
-</label>
-
-</div>
 
 <button onclick="adicionarProdutoComTamanho(this,'Paçoca')">
 Adicionar
@@ -446,61 +402,56 @@ Adicionar
 
 </div>
 
-    <div class="produto">
-    <img src="img/meu-acai.jpg" alt="Meu Açaí">
-    <h3>Meu Açaí</h3>
+<div class="produto">
 
-    <p class="descricao">
-        Açaí batido, cremoso e gelado, montado com os complementos da sua escolha.
-    </p>
+<img src="img/meu-acai.jpg">
 
-    <p class="preco">R$ 14,00</p>
+<h3>Meu Açaí</h3>
 
-    <div class="acompanhamentos">
-        <strong>Escolha até 2 acompanhamentos:</strong>
+<p class="descricao">
+Açaí batido, cremoso e gelado, montado com os complementos da sua escolha.
+</p>
 
-        <label>
-            <input type="checkbox" value="Amendoim triturado" onchange="controlarAcompanhamentos(this)">
-            Amendoim triturado
-        </label>
+<div class="tamanho">
 
-        <label>
-            <input type="checkbox" value="Paçoca" onchange="controlarAcompanhamentos(this)">
-            Paçoca
-        </label>
+<strong>Escolha o tamanho:</strong>
 
-        <label>
-            <input type="checkbox" value="Leite em pó" onchange="controlarAcompanhamentos(this)">
-            Leite em pó
-        </label>
+<label>
+<input type="radio" name="tamanho-meuacai" value="300" data-preco="14">
+300ml (R$14)
+</label>
 
-        <label>
-            <input type="checkbox" value="Leite condensado" onchange="controlarAcompanhamentos(this)">
-            Leite condensado
-        </label>
+<label>
+<input type="radio" name="tamanho-meuacai" value="500" data-preco="21">
+500ml (R$21)
+</label>
 
-        <label>
-            <input type="checkbox" value="Creme de paçoca" onchange="controlarAcompanhamentos(this)">
-            Creme de paçoca
-        </label>
+</div>
 
-        <label>
-            <input type="checkbox" value="Creme de maracujá" onchange="controlarAcompanhamentos(this)">
-            Creme de maracujá
-        </label>
+<button onclick="abrirMeuAcai()">🍧 Escolher acompanhamentos</button>
+<div id="modalMeuAcai" class="modal-frete">
 
-        <label>
-            <input type="checkbox" value="Creme de ninho" onchange="controlarAcompanhamentos(this)">
-            Creme de ninho
-        </label>
+<div class="modal-conteudo">
 
-        <label>
-            <input type="checkbox" value="Nutella (+R$ 1,50)" data-extra="1.5" onchange="controlarAcompanhamentos(this)">
-            Nutella (+R$ 2,00)
-        </label>
-    </div>
+<span class="fechar" onclick="fecharMeuAcai()">✖</span>
 
-    <button onclick="adicionarMeuAcai()">Adicionar Meu Açaí</button>
+<h3>Escolha até 2 acompanhamentos</h3>
+
+<label><input type="checkbox" value="Amendoim triturado" onchange="limitarMeuAcai(this)"> Amendoim triturado</label>
+<label><input type="checkbox" value="Paçoca" onchange="limitarMeuAcai(this)"> Paçoca</label>
+<label><input type="checkbox" value="Leite em pó" onchange="limitarMeuAcai(this)"> Leite em pó</label>
+<label><input type="checkbox" value="Leite condensado" onchange="limitarMeuAcai(this)"> Leite condensado</label>
+<label><input type="checkbox" value="Creme de paçoca" onchange="limitarMeuAcai(this)"> Creme de paçoca</label>
+<label><input type="checkbox" value="Creme de maracujá" onchange="limitarMeuAcai(this)"> Creme de maracujá</label>
+<label><input type="checkbox" value="Creme de ninho" onchange="limitarMeuAcai(this)"> Creme de ninho</label>
+<label><input type="checkbox" value="Nutella (+1,50)" data-extra="1.5" onchange="limitarMeuAcai(this)"> Nutella (+1,50)</label>
+
+</div>
+</div>
+<button onclick="adicionarMeuAcaiFinal(this)">
+Adicionar Meu Açaí
+</button>
+
 </div>
     
 <div id="confirmacao">✔ Item adicionado ao carrinho</div>
@@ -648,7 +599,23 @@ tamanhoSelecionado.checked = false;
 extrasSelecionados.forEach(e => e.checked = false);
 
 }
-    
+    function abrirMeuAcai(){
+document.getElementById("modalMeuAcai").style.display="flex";
+}
+
+function fecharMeuAcai(){
+document.getElementById("modalMeuAcai").style.display="none";
+}
+    function limitarMeuAcai(checkbox){
+
+const selecionados = document.querySelectorAll("#modalMeuAcai input:checked");
+
+if(selecionados.length > 2){
+checkbox.checked = false;
+alert("Você pode escolher no máximo 2 acompanhamentos.");
+}
+
+}
     function controlarAcompanhamentos(checkbox) {
     const selecionados = document.querySelectorAll(
         '.acompanhamentos input[type="checkbox"]:checked'
@@ -665,6 +632,55 @@ document.getElementById("modalFrete").style.display="flex";
 
 function fecharFrete(){
 document.getElementById("modalFrete").style.display="none";
+}
+    function adicionarMeuAcaiFinal(botao){
+
+const produto = botao.closest(".produto");
+
+// tamanho
+const tamanhoSelecionado = produto.querySelector("input[type='radio']:checked");
+
+if (!tamanhoSelecionado) {
+alert("Escolha o tamanho.");
+return;
+}
+
+const tamanho = tamanhoSelecionado.value;
+let preco = Number(tamanhoSelecionado.dataset.preco);
+
+// acompanhamentos
+const selecionados = document.querySelectorAll("#modalMeuAcai input:checked");
+
+if(selecionados.length === 0){
+alert("Escolha pelo menos 1 acompanhamento.");
+return;
+}
+
+let extras = [];
+
+selecionados.forEach(item => {
+extras.push(item.value);
+preco += Number(item.dataset.extra || 0);
+});
+
+// adicionar ao carrinho
+carrinho.push({
+nome: "Meu Açaí " + tamanho + "ml",
+preco: preco,
+detalhes: extras.join(", ")
+});
+
+totalProdutos += preco;
+
+atualizarCarrinho();
+mostrarConfirmacao();
+
+// limpar
+tamanhoSelecionado.checked = false;
+selecionados.forEach(e => e.checked = false);
+
+fecharMeuAcai();
+
 }
 
 function adicionarProduto(botao, nome, precoBase) {
