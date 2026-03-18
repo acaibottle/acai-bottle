@@ -133,6 +133,38 @@ transform:scale(1.1);
 cursor:pointer;
 }
 
+    .modal-acai{
+max-width:400px;
+width:90%;
+}
+
+.lista-acompanhamentos{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:8px;
+margin-top:10px;
+}
+
+.lista-acompanhamentos label{
+background:#f5f5f5;
+padding:8px;
+border-radius:8px;
+cursor:pointer;
+font-size:13px;
+display:flex;
+align-items:center;
+gap:6px;
+transition:0.2s;
+}
+
+.lista-acompanhamentos label:hover{
+background:#eaeaea;
+}
+
+.lista-acompanhamentos input{
+transform:scale(1.1);
+cursor:pointer;
+}
     
     
 button{
@@ -489,27 +521,35 @@ Açaí batido, cremoso e gelado, montado com os complementos da sua escolha.
 <button onclick="abrirMeuAcai()">🍧 Escolher acompanhamentos</button>
 <div id="modalMeuAcai" class="modal-frete">
 
-<div class="modal-conteudo">
+<div class="modal-conteudo modal-acai">
 
 <span class="fechar" onclick="fecharMeuAcai()">✖</span>
 
 <h3>Escolha até 2 acompanhamentos</h3>
 
+<div class="lista-acompanhamentos">
+
 <label><input type="checkbox" value="Amendoim triturado" onchange="limitarMeuAcai(this)"> Amendoim triturado</label>
+
 <label><input type="checkbox" value="Paçoca" onchange="limitarMeuAcai(this)"> Paçoca</label>
+
 <label><input type="checkbox" value="Leite em pó" onchange="limitarMeuAcai(this)"> Leite em pó</label>
+
 <label><input type="checkbox" value="Leite condensado" onchange="limitarMeuAcai(this)"> Leite condensado</label>
+
 <label><input type="checkbox" value="Creme de paçoca" onchange="limitarMeuAcai(this)"> Creme de paçoca</label>
+
 <label><input type="checkbox" value="Creme de maracujá" onchange="limitarMeuAcai(this)"> Creme de maracujá</label>
+
 <label><input type="checkbox" value="Creme de ninho" onchange="limitarMeuAcai(this)"> Creme de ninho</label>
+
 <label><input type="checkbox" value="Nutella (+2,00)" data-extra="1.5" onchange="limitarMeuAcai(this)"> Nutella (+2,00)</label>
 
 </div>
-</div>
-<button onclick="adicionarMeuAcaiFinal(this)">
-Adicionar Meu Açaí
-</button>
 
+<button onclick="fecharMeuAcai()" style="margin-top:10px;">Confirmar</button>
+
+</div>
 </div>
     
 <div id="confirmacao">✔ Item adicionado ao carrinho</div>
