@@ -489,7 +489,7 @@ Cremoso, intenso e irresistível.
 <strong>Escolha o tamanho:</strong>
 
 <label>
-<input type="radio" name="tamanho-nutella" value="300" data-preco="16.5">
+<input type="radio" name="tamanho-nutella" value="300" data-preco="16">
 300ml (R$16)
 </label>
 
@@ -564,6 +564,10 @@ Açaí batido, cremoso e gelado, montado com os complementos da sua escolha.
 
 <button onclick="fecharMeuAcai()" style="margin-top:10px;">Confirmar</button>
 
+    <button onclick="adicionarMeuAcaiFinal(this)">
+Adicionar Meu Açaí
+</button>
+    
 </div>
 </div>
     
@@ -749,54 +753,57 @@ document.getElementById("modalFrete").style.display="flex";
 function fecharFrete(){
 document.getElementById("modalFrete").style.display="none";
 }
-    function adicionarMeuAcaiFinal(botao){
+   function adicionarMeuAcaiFinal(botao){
 
-const produto = botao.closest(".produto");
+    const produto = botao.closest(".produto");
 
-// tamanho
-const tamanhoSelecionado = produto.querySelector("input[type='radio']:checked");
+    // tamanho
+    const tamanhoSelecionado = produto.querySelector("input[type='radio']:checked");
 
-if (!tamanhoSelecionado) {
-alert("Escolha o tamanho.");
-return;
-}
+    if (!tamanhoSelecionado) {
+        alert("Escolha o tamanho do açaí.");
+        return;
+    }
 
-const tamanho = tamanhoSelecionado.value;
-let preco = Number(tamanhoSelecionado.dataset.preco);
+    const tamanho = tamanhoSelecionado.value;
+    let preco = Number(tamanhoSelecionado.dataset.preco);
 
-// acompanhamentos
-const selecionados = document.querySelectorAll("#modalMeuAcai input:checked");
+    // acompanhamentos (modal)
+    const selecionados = document.querySelectorAll("#modalMeuAcai input:checked");
 
-if(selecionados.length === 0){
-alert("Escolha pelo menos 1 acompanhamento.");
-return;
-}
+    if(selecionados.length === 0){
+        alert("Escolha pelo menos 1 acompanhamento.");
+        return;
+    }
 
-let extras = [];
+    if(selecionados.length > 2){
+        alert("Máximo de 2 acompanhamentos.");
+        return;
+    }
 
-selecionados.forEach(item => {
-extras.push(item.value);
-preco += Number(item.dataset.extra || 0);
-});
+    let extras = [];
 
-// adicionar ao carrinho
-carrinho.push({
-nome: "Meu Açaí " + tamanho + "ml",
-preco: preco,
-detalhes: extras.join(", ")
-});
+    selecionados.forEach(item => {
+        extras.push(item.value);
+        preco += Number(item.dataset.extra || 0);
+    });
 
-totalProdutos += preco;
+    carrinho.push({
+        nome: "Meu Açaí " + tamanho + "ml",
+        preco: preco,
+        detalhes: extras.join(", ")
+    });
 
-atualizarCarrinho();
-mostrarConfirmacao();
+    totalProdutos += preco;
 
-// limpar
-tamanhoSelecionado.checked = false;
-selecionados.forEach(e => e.checked = false);
+    atualizarCarrinho();
+    mostrarConfirmacao();
 
-fecharMeuAcai();
+    // limpar tudo
+    tamanhoSelecionado.checked = false;
+    selecionados.forEach(e => e.checked = false);
 
+    fecharMeuAcai();
 }
 
 function adicionarProduto(botao, nome, precoBase) {
