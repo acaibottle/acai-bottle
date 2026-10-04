@@ -427,19 +427,7 @@ O clássico no ponto certo.
 
 </div>
 
-<div class="bloco acompanhamentos">
-<strong>Adicionais:</strong>
-    
-<label>
-<input type="checkbox" value="Leite condensado" data-extra="1">
-Leite condensado (+R$1)
-</label>
 
-<label>
-<input type="checkbox" value="Amendoim triturado" data-extra="1">
-Amendoim triturado (+R$1)
-</label>
-</div>
 
 <button onclick="adicionarProdutoComTamanho(this,'Tradicional')">
 Adicionar
@@ -614,11 +602,13 @@ Açaí batido, cremoso e gelado, montado com os complementos da sua escolha.
 
 <span class="fechar" onclick="fecharMeuAcai()">✖</span>
 
-<h3>Escolha até 4 complementos</h3>
+<h3>Escolha até 2 complementos</h3>
 
 <div class="lista-acompanhamentos">
 
 <label><input type="checkbox" value="Amendoim triturado" onchange="limitarMeuAcai(this)"> Amendoim triturado</label>
+
+<label><input type="checkbox" value="Castanha triturada" onchange="limitarMeuAcai(this)"> Castanha triturada</label>
 
 <label><input type="checkbox" value="Paçoca" onchange="limitarMeuAcai(this)"> Paçoca</label>
 
@@ -859,9 +849,9 @@ document.getElementById("modalMeuAcai").style.display="none";
 
 const selecionados = document.querySelectorAll("#modalMeuAcai input:checked");
 
-if(selecionados.length > 4){
+if(selecionados.length > 2){
 checkbox.checked = false;
-alert("Você pode escolher no máximo 4 complementos.");
+alert("Você pode escolher no máximo 2 complementos.");
 }
 
 }
@@ -872,7 +862,7 @@ alert("Você pode escolher no máximo 4 complementos.");
 
     if (selecionados.length > 2) {
         checkbox.checked = false;
-        alert("Você pode escolher no máximo 4 complementos.");
+        alert("Você pode escolher no máximo 2 complementos.");
     }
 }
     function abrirFrete(){
@@ -905,8 +895,8 @@ document.getElementById("modalFrete").style.display="none";
         return;
     }
 
-    if(selecionados.length > 4){
-        alert("Você pode escolher no máximo 4 complementos.");
+    if(selecionados.length > 2){
+        alert("Você pode escolher no máximo 2 complementos.");
         return;
     }
 
@@ -991,8 +981,8 @@ extrasSelecionados.forEach(e => e.checked = false);
         return;
     }
 
-    if (selecionados.length > 4) {
-        alert("Você pode escolher no máximo 4 complementos.");
+    if (selecionados.length > 2) {
+        alert("Você pode escolher no máximo 2 complementos.");
         return;
     }
 
