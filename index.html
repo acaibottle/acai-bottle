@@ -327,6 +327,15 @@ grid-template-columns:1fr;
   border-radius: 12px;
 }
 
+
+/* Statuso automático da loja */
+.status-loja{max-width:720px;margin:16px auto 8px;padding:12px 18px;border-radius:12px;text-align:center;font-weight:bold;font-size:16px;box-shadow:0 3px 10px rgba(0,0,0,.08)}
+.status-loja.aberta{background:#e7f7ec;color:#176b32;border:1px solid #8dd5a1}
+.status-loja.fechada{background:#fff0f0;color:#a51d2d;border:1px solid #efaaaa}
+.status-loja small{display:block;font-weight:normal;margin-top:5px}
+.botao-bloqueado{opacity:.55!important;cursor:not-allowed!important}
+@media(max-width:600px){.status-loja{margin:12px;padding:11px;font-size:15px}}
+
 </style>
 
 </head>
@@ -353,6 +362,7 @@ grid-template-columns:1fr;
     <img src="./logo.png" alt="Logo Açai Bottle" class="logo">
     <h1>Açai Bottle</h1>
 </header>
+<div id="statusLoja" class="status-loja" role="status" aria-live="polite"></div>
 
 <section class="produtos">
 <h2 class="categoria-titulo">Açaí</h2>
@@ -753,6 +763,47 @@ let totalProdutos = 0;
 let frete = 0;
 let bairroSelecionado = "";
 
+// Funcionamento da loja no fuso de Brasília (America/Sao_Paulo).
+// Segunda: 17h-22h; terça: fechada; quarta a sexta: 17h-22h;
+// sábado: 11h-22h; domingo: 11h-17h.
+function obterHorarioBrasilia() {
+    const partes = new Intl.DateTimeFormat('en-US', {
+        timeZone: 'America/Sao_Paulo', weekday: 'short', hour: '2-digit', minute: '2-digit', hourCycle: 'h23'
+    }).formatToParts(new Date());
+    const get = tipo => partes.find(p => p.type === tipo)?.value;
+    const dias = {Sun:0, Mon:1, Tue:2, Wed:3, Thu:4, Fri:5, Sat:6};
+    return { dia: dias[get('weekday')], minutos: Number(get('hour')) * 60 + Number(get('minute')) };
+}
+function lojaEstaAberta() {
+    const {dia, minutos} = obterHorarioBrasilia();
+    if (dia === 2) return false; // terça-feira
+    if (dia === 0) return minutos >= 11*60 && minutos < 17*60;
+    if (dia === 6) return minutos >= 11*60 && minutos < 22*60;
+    return minutos >= 17*60 && minutos < 22*60; // segunda e quarta a sexta
+}
+function atualizarStatusLoja() {
+    const aberta = lojaEstaAberta();
+    const el = document.getElementById('statusLoja');
+    if (el) {
+        el.className = 'status-loja ' + (aberta ? 'aberta' : 'fechada');
+        el.innerHTML = aberta
+          ? '🟢 LOJA ABERTA <small>Estamos recebendo pedidos! Funcionamento conforme os horários abaixo.</small>'
+          : '🔴 LOJA FECHADA <small>No momento não estamos recebendo pedidos. Confira nossos horários de funcionamento.</small>';
+    }
+    document.querySelectorAll('button').forEach(btn => {
+        const acao = (btn.getAttribute('onclick') || '').toLowerCase();
+        const ePedido = /adicionar|enviarpedido/.test(acao) || /enviar pedido no whatsapp/i.test(btn.textContent);
+        if (ePedido) {
+            btn.disabled = !aberta;
+            btn.classList.toggle('botao-bloqueado', !aberta);
+            btn.title = aberta ? '' : 'A loja está fechada no momento';
+        }
+    });
+}
+setInterval(atualizarStatusLoja, 30000);
+document.addEventListener('DOMContentLoaded', atualizarStatusLoja);
+
+
 function adicionarProdutoComTamanho(botao, nome) {
 
 const produto = botao.closest(".produto");
@@ -1136,6 +1187,12 @@ function mostrarConfirmacao() {
 }
 
 function enviarPedido() {
+
+    if (!lojaEstaAberta()) {
+        atualizarStatusLoja();
+        alert("A Açaí Bottle está fechada no momento. Confira nossos horários de funcionamento.");
+        return;
+    }
 
     const nome = document.getElementById("nomeCliente").value;
     const pagamento = document.getElementById("pagamento").value;
