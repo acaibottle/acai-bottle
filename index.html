@@ -38,6 +38,15 @@ gap:20px;
 padding:20px;
 }
     
+.categoria-titulo {
+    grid-column: 1 / -1;
+    margin: 12px 0 0;
+    padding: 12px 16px;
+    color: #5e2b97;
+    border-bottom: 2px solid #7b3fe4;
+    font-size: 24px;
+}
+
 .produto{
 background:#fff;
 padding:15px;
@@ -335,6 +344,62 @@ grid-template-columns:1fr;
 </header>
 
 <section class="produtos">
+<h2 class="categoria-titulo">Açaí</h2>
+
+<div class="produto">
+
+<img src="img/acai.jpg" alt="Açaí 300ml">
+
+<h3>Açaí 300ml</h3>
+
+<p class="descricao">
+Açaí cremoso e geladinho. Escolha até 4 complementos e deixe seu Açaí Bottle ainda mais gostoso.
+</p>
+
+<div class="tamanho">
+<strong>Tamanho e preço:</strong>
+<label>
+<input type="radio" name="tamanho-acai-personalizado" value="300" data-preco="16.90" checked>
+300 ml (R$ 16,90)
+</label>
+</div>
+
+<button onclick="abrirNovoAcai()">🍧 Escolher complementos</button>
+
+<div id="modalNovoAcai" class="modal-frete">
+  <div class="modal-conteudo modal-acai">
+    <span class="fechar" onclick="fecharNovoAcai()">✖</span>
+    <h3>Monte seu Açaí</h3>
+    <p>Escolha no mínimo 2 e no máximo 4 complementos.</p>
+
+    <div class="lista-acompanhamentos">
+      <label><input type="checkbox" value="Amendoim triturado" onchange="limitarNovoAcai(this)"> Amendoim triturado</label>
+      <label><input type="checkbox" value="Banana" onchange="limitarNovoAcai(this)"> Banana</label>
+      <label><input type="checkbox" value="Bis" onchange="limitarNovoAcai(this)"> Bis</label>
+      <label><input type="checkbox" value="Castanha triturada" onchange="limitarNovoAcai(this)"> Castanha triturada</label>
+      <label><input type="checkbox" value="Cereja" onchange="limitarNovoAcai(this)"> Cereja</label>
+      <label><input type="checkbox" value="Chocoball" onchange="limitarNovoAcai(this)"> Chocoball</label>
+      <label><input type="checkbox" value="Confetes" onchange="limitarNovoAcai(this)"> Confetes</label>
+      <label><input type="checkbox" value="Creme de ninho" onchange="limitarNovoAcai(this)"> Creme de ninho</label>
+      <label><input type="checkbox" value="Creme de paçoca" onchange="limitarNovoAcai(this)"> Creme de paçoca</label>
+      <label><input type="checkbox" value="Granola" onchange="limitarNovoAcai(this)"> Granola</label>
+      <label><input type="checkbox" value="Jujuba" onchange="limitarNovoAcai(this)"> Jujuba</label>
+      <label><input type="checkbox" value="Leite condensado" onchange="limitarNovoAcai(this)"> Leite condensado</label>
+      <label><input type="checkbox" value="Leite em pó" onchange="limitarNovoAcai(this)"> Leite em pó</label>
+      <label><input type="checkbox" value="Nutella" onchange="limitarNovoAcai(this)"> Nutella</label>
+      <label><input type="checkbox" value="Paçoca" onchange="limitarNovoAcai(this)"> Paçoca</label>
+    </div>
+
+    <button onclick="adicionarNovoAcaiFinal(this)" style="margin-top:10px;">Adicionar ao carrinho — R$ 16,90</button>
+  </div>
+</div>
+
+</div>
+
+
+<h2 class="categoria-titulo">Açaí na garrafa</h2>
+
+
 
 <div class="produto">
 
@@ -518,56 +583,6 @@ Adicionar
 
 <div class="produto">
 
-<img src="img/acai.jpg" alt="Açaí de 300 ml">
-
-<h3>Açaí</h3>
-
-<p class="descricao">
-Açaí cremoso e geladinho. Escolha de 2 a 4 complementos e deixe seu Açaí Bottle ainda mais gostoso.
-</p>
-
-<div class="tamanho">
-<strong>Tamanho e preço:</strong>
-<label>
-<input type="radio" name="tamanho-acai-personalizado" value="300" data-preco="16.90" checked>
-300 ml (R$ 16,90)
-</label>
-</div>
-
-<button onclick="abrirNovoAcai()">🍧 Escolher complementos</button>
-
-<div id="modalNovoAcai" class="modal-frete">
-  <div class="modal-conteudo modal-acai">
-    <span class="fechar" onclick="fecharNovoAcai()">✖</span>
-    <h3>Monte seu Açaí</h3>
-    <p>Escolha no mínimo 2 e no máximo 4 complementos.</p>
-
-    <div class="lista-acompanhamentos">
-      <label><input type="checkbox" value="Amendoim triturado" onchange="limitarNovoAcai(this)"> Amendoim triturado</label>
-      <label><input type="checkbox" value="Banana" onchange="limitarNovoAcai(this)"> Banana</label>
-      <label><input type="checkbox" value="Bis" onchange="limitarNovoAcai(this)"> Bis</label>
-      <label><input type="checkbox" value="Castanha triturada" onchange="limitarNovoAcai(this)"> Castanha triturada</label>
-      <label><input type="checkbox" value="Cereja" onchange="limitarNovoAcai(this)"> Cereja</label>
-      <label><input type="checkbox" value="Chocoball" onchange="limitarNovoAcai(this)"> Chocoball</label>
-      <label><input type="checkbox" value="Confetes" onchange="limitarNovoAcai(this)"> Confetes</label>
-      <label><input type="checkbox" value="Creme de ninho" onchange="limitarNovoAcai(this)"> Creme de ninho</label>
-      <label><input type="checkbox" value="Creme de paçoca" onchange="limitarNovoAcai(this)"> Creme de paçoca</label>
-      <label><input type="checkbox" value="Granola" onchange="limitarNovoAcai(this)"> Granola</label>
-      <label><input type="checkbox" value="Jujuba" onchange="limitarNovoAcai(this)"> Jujuba</label>
-      <label><input type="checkbox" value="Leite condensado" onchange="limitarNovoAcai(this)"> Leite condensado</label>
-      <label><input type="checkbox" value="Leite em pó" onchange="limitarNovoAcai(this)"> Leite em pó</label>
-      <label><input type="checkbox" value="Nutella" onchange="limitarNovoAcai(this)"> Nutella</label>
-      <label><input type="checkbox" value="Paçoca" onchange="limitarNovoAcai(this)"> Paçoca</label>
-    </div>
-
-    <button onclick="adicionarNovoAcaiFinal(this)" style="margin-top:10px;">Adicionar ao carrinho — R$ 16,90</button>
-  </div>
-</div>
-
-</div>
-
-<div class="produto">
-
 <img src="img/meu-acai.jpg">
 
 <h3>Meu Açaí</h3>
@@ -599,7 +614,7 @@ Açaí batido, cremoso e gelado, montado com os complementos da sua escolha.
 
 <span class="fechar" onclick="fecharMeuAcai()">✖</span>
 
-<h3>Escolha até 2 acompanhamentos</h3>
+<h3>Escolha até 4 complementos</h3>
 
 <div class="lista-acompanhamentos">
 
@@ -844,9 +859,9 @@ document.getElementById("modalMeuAcai").style.display="none";
 
 const selecionados = document.querySelectorAll("#modalMeuAcai input:checked");
 
-if(selecionados.length > 2){
+if(selecionados.length > 4){
 checkbox.checked = false;
-alert("Você pode escolher no máximo 2 acompanhamentos.");
+alert("Você pode escolher no máximo 4 complementos.");
 }
 
 }
@@ -857,7 +872,7 @@ alert("Você pode escolher no máximo 2 acompanhamentos.");
 
     if (selecionados.length > 2) {
         checkbox.checked = false;
-        alert("Você pode escolher no máximo 2 acompanhamentos.");
+        alert("Você pode escolher no máximo 4 complementos.");
     }
 }
     function abrirFrete(){
@@ -886,12 +901,12 @@ document.getElementById("modalFrete").style.display="none";
     const selecionados = document.querySelectorAll("#modalMeuAcai input:checked");
 
     if(selecionados.length === 0){
-        alert("Escolha pelo menos 1 acompanhamento.");
+        alert("Escolha pelo menos 1 complemento.");
         return;
     }
 
-    if(selecionados.length > 2){
-        alert("Máximo de 2 acompanhamentos.");
+    if(selecionados.length > 4){
+        alert("Você pode escolher no máximo 4 complementos.");
         return;
     }
 
@@ -976,8 +991,8 @@ extrasSelecionados.forEach(e => e.checked = false);
         return;
     }
 
-    if (selecionados.length > 2) {
-        alert("Máximo 2 acompanhamentos.");
+    if (selecionados.length > 4) {
+        alert("Você pode escolher no máximo 4 complementos.");
         return;
     }
 
