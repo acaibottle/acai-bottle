@@ -518,6 +518,56 @@ Adicionar
 
 <div class="produto">
 
+<img src="img/acai.jpg" alt="Açaí de 300 ml">
+
+<h3>Açaí</h3>
+
+<p class="descricao">
+Açaí cremoso e geladinho. Escolha de 2 a 4 complementos e deixe seu Açaí Bottle ainda mais gostoso.
+</p>
+
+<div class="tamanho">
+<strong>Tamanho e preço:</strong>
+<label>
+<input type="radio" name="tamanho-acai-personalizado" value="300" data-preco="16.90" checked>
+300 ml (R$ 16,90)
+</label>
+</div>
+
+<button onclick="abrirNovoAcai()">🍧 Escolher complementos</button>
+
+<div id="modalNovoAcai" class="modal-frete">
+  <div class="modal-conteudo modal-acai">
+    <span class="fechar" onclick="fecharNovoAcai()">✖</span>
+    <h3>Monte seu Açaí</h3>
+    <p>Escolha no mínimo 2 e no máximo 4 complementos.</p>
+
+    <div class="lista-acompanhamentos">
+      <label><input type="checkbox" value="Amendoim triturado" onchange="limitarNovoAcai(this)"> Amendoim triturado</label>
+      <label><input type="checkbox" value="Banana" onchange="limitarNovoAcai(this)"> Banana</label>
+      <label><input type="checkbox" value="Bis" onchange="limitarNovoAcai(this)"> Bis</label>
+      <label><input type="checkbox" value="Castanha triturada" onchange="limitarNovoAcai(this)"> Castanha triturada</label>
+      <label><input type="checkbox" value="Cereja" onchange="limitarNovoAcai(this)"> Cereja</label>
+      <label><input type="checkbox" value="Chocoball" onchange="limitarNovoAcai(this)"> Chocoball</label>
+      <label><input type="checkbox" value="Confetes" onchange="limitarNovoAcai(this)"> Confetes</label>
+      <label><input type="checkbox" value="Creme de ninho" onchange="limitarNovoAcai(this)"> Creme de ninho</label>
+      <label><input type="checkbox" value="Creme de paçoca" onchange="limitarNovoAcai(this)"> Creme de paçoca</label>
+      <label><input type="checkbox" value="Granola" onchange="limitarNovoAcai(this)"> Granola</label>
+      <label><input type="checkbox" value="Jujuba" onchange="limitarNovoAcai(this)"> Jujuba</label>
+      <label><input type="checkbox" value="Leite condensado" onchange="limitarNovoAcai(this)"> Leite condensado</label>
+      <label><input type="checkbox" value="Leite em pó" onchange="limitarNovoAcai(this)"> Leite em pó</label>
+      <label><input type="checkbox" value="Nutella" onchange="limitarNovoAcai(this)"> Nutella</label>
+      <label><input type="checkbox" value="Paçoca" onchange="limitarNovoAcai(this)"> Paçoca</label>
+    </div>
+
+    <button onclick="adicionarNovoAcaiFinal(this)" style="margin-top:10px;">Adicionar ao carrinho — R$ 16,90</button>
+  </div>
+</div>
+
+</div>
+
+<div class="produto">
+
 <img src="img/meu-acai.jpg">
 
 <h3>Meu Açaí</h3>
@@ -728,7 +778,62 @@ tamanhoSelecionado.checked = false;
 extrasSelecionados.forEach(e => e.checked = false);
 
 }
-    function abrirMeuAcai(){
+    function abrirNovoAcai() {
+    document.getElementById("modalNovoAcai").style.display = "flex";
+}
+
+function fecharNovoAcai() {
+    document.getElementById("modalNovoAcai").style.display = "none";
+}
+
+function limitarNovoAcai(checkbox) {
+    const selecionados = document.querySelectorAll("#modalNovoAcai input[type='checkbox']:checked");
+
+    if (selecionados.length > 4) {
+        checkbox.checked = false;
+        alert("Você pode escolher no máximo 4 complementos.");
+    }
+}
+
+function adicionarNovoAcaiFinal(botao) {
+    const produto = botao.closest(".produto");
+    const tamanhoSelecionado = produto.querySelector("input[type='radio']:checked");
+
+    if (!tamanhoSelecionado) {
+        alert("Selecione o tamanho do açaí.");
+        return;
+    }
+
+    const selecionados = document.querySelectorAll("#modalNovoAcai input[type='checkbox']:checked");
+
+    if (selecionados.length < 2) {
+        alert("Escolha pelo menos 2 complementos.");
+        return;
+    }
+
+    if (selecionados.length > 4) {
+        alert("Escolha no máximo 4 complementos.");
+        return;
+    }
+
+    const complementos = Array.from(selecionados).map(item => item.value);
+    const preco = Number(tamanhoSelecionado.dataset.preco);
+
+    carrinho.push({
+        nome: "Açaí " + tamanhoSelecionado.value + "ml",
+        preco: preco,
+        detalhes: complementos.join(", ")
+    });
+
+    totalProdutos += preco;
+    atualizarCarrinho();
+    mostrarConfirmacao();
+
+    selecionados.forEach(item => item.checked = false);
+    fecharNovoAcai();
+}
+
+function abrirMeuAcai(){
 document.getElementById("modalMeuAcai").style.display="flex";
 }
 
