@@ -200,6 +200,7 @@ box-shadow:0 6px 18px rgba(0,0,0,0.08);
 position:sticky;
 top:20px;
 height:fit-content;
+margin-top:45px;
 }
 
 .total{
@@ -333,8 +334,13 @@ grid-template-columns:1fr;
 .status-loja.aberta{background:#e7f7ec;color:#176b32;border:1px solid #8dd5a1}
 .status-loja.fechada{background:#fff0f0;color:#a51d2d;border:1px solid #efaaaa}
 .status-loja small{display:block;font-weight:normal;margin-top:5px}
+.horarios-funcionamento{max-width:720px;margin:0 auto 22px;padding:14px 18px;background:#fff;border:1px solid #e8e8e8;border-radius:12px;box-shadow:0 2px 8px rgba(0,0,0,.05)}
+.horarios-funcionamento h4{margin:0 0 10px;text-align:center;font-size:16px}
+.horarios-funcionamento .linha-horario{display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px solid #f0f0f0;font-size:14px}
+.horarios-funcionamento .linha-horario:last-child{border-bottom:0}
+@media(max-width:600px){.horarios-funcionamento{margin:0 12px 18px;padding:12px 14px}}
 .botao-bloqueado{opacity:.55!important;cursor:not-allowed!important}
-@media(max-width:600px){.status-loja{margin:12px;padding:11px;font-size:15px}}
+@media(max-width:600px){.status-loja{margin:12px;padding:11px;font-size:15px}.carrinho{margin-top:35px}}
 
 </style>
 
@@ -363,6 +369,16 @@ grid-template-columns:1fr;
     <h1>Açai Bottle</h1>
 </header>
 <div id="statusLoja" class="status-loja" role="status" aria-live="polite"></div>
+<div class="horarios-funcionamento">
+  <h4>🕒 Horários de funcionamento</h4>
+  <div class="linha-horario"><span>Segunda-feira</span><strong>17h às 22h</strong></div>
+  <div class="linha-horario"><span>Terça-feira</span><strong>Fechado</strong></div>
+  <div class="linha-horario"><span>Quarta-feira</span><strong>17h às 22h</strong></div>
+  <div class="linha-horario"><span>Quinta-feira</span><strong>17h às 22h</strong></div>
+  <div class="linha-horario"><span>Sexta-feira</span><strong>17h às 22h</strong></div>
+  <div class="linha-horario"><span>Sábado</span><strong>12h às 22h</strong></div>
+  <div class="linha-horario"><span>Domingo</span><strong>12h às 17h</strong></div>
+</div>
 
 <section class="produtos">
 <h2 class="categoria-titulo">Açaí</h2>
@@ -753,6 +769,9 @@ Novo Horizonte – R$ 10
             <option value="Dinheiro">Dinheiro</option>
             <option value="Cartão">Cartão</option>
         </select>
+        <div id="campoTroco" style="display:none;margin-top:10px;">
+            <input type="number" id="trocoPara" min="0" step="0.01" placeholder="Troco para quanto? (R$)">
+        </div>
         <div class="finalizar">
     <button onclick="enviarPedido()">📲 Enviar pedido no WhatsApp</button>
     </div>
@@ -763,9 +782,20 @@ let totalProdutos = 0;
 let frete = 0;
 let bairroSelecionado = "";
 
+document.addEventListener('DOMContentLoaded', function() {
+    const pagamentoEl = document.getElementById('pagamento');
+    const campoTroco = document.getElementById('campoTroco');
+    if (pagamentoEl && campoTroco) {
+        pagamentoEl.addEventListener('change', function() {
+            campoTroco.style.display = this.value === 'Dinheiro' ? 'block' : 'none';
+            if (this.value !== 'Dinheiro') document.getElementById('trocoPara').value = '';
+        });
+    }
+});
+
 // Funcionamento da loja no fuso de Brasília (America/Sao_Paulo).
 // Segunda: 17h-22h; terça: fechada; quarta a sexta: 17h-22h;
-// sábado: 11h-22h; domingo: 11h-17h.
+// sábado: 12h-22h; domingo: 12h-17h.
 function obterHorarioBrasilia() {
     const partes = new Intl.DateTimeFormat('en-US', {
         timeZone: 'America/Sao_Paulo', weekday: 'short', hour: '2-digit', minute: '2-digit', hourCycle: 'h23'
@@ -777,8 +807,8 @@ function obterHorarioBrasilia() {
 function lojaEstaAberta() {
     const {dia, minutos} = obterHorarioBrasilia();
     if (dia === 2) return false; // terça-feira
-    if (dia === 0) return minutos >= 11*60 && minutos < 17*60;
-    if (dia === 6) return minutos >= 11*60 && minutos < 22*60;
+    if (dia === 0) return minutos >= 12*60 && minutos < 17*60;
+    if (dia === 6) return minutos >= 12*60 && minutos < 22*60;
     return minutos >= 17*60 && minutos < 22*60; // segunda e quarta a sexta
 }
 function atualizarStatusLoja() {
@@ -1196,6 +1226,7 @@ function enviarPedido() {
 
     const nome = document.getElementById("nomeCliente").value;
     const pagamento = document.getElementById("pagamento").value;
+    const trocoPara = document.getElementById("trocoPara")?.value || "";
     const endereco = document.getElementById("enderecoCliente").value;
 
     if (carrinho.length === 0) {
@@ -1208,6 +1239,11 @@ function enviarPedido() {
         return;
     }
 
+    if (pagamento === "Dinheiro" && (!trocoPara || Number(trocoPara) < 0)) {
+        alert("Informe o valor para o qual você precisa de troco.");
+        return;
+    }
+
     let freteFinal = totalProdutos >= 55 ? 0 : frete;
     let totalFinal = totalProdutos + freteFinal;
 
@@ -1215,7 +1251,11 @@ function enviarPedido() {
     mensagem += `👤 Cliente: ${nome}\n`;
     mensagem += `📍 Endereço: ${endereco}\n`;
     mensagem += `📌 Bairro: ${bairroSelecionado}\n`;
-    mensagem += `💳 Pagamento: ${pagamento}\n\n`;
+    mensagem += `💳 Pagamento: ${pagamento}\n`;
+    if (pagamento === "Dinheiro") {
+        mensagem += `💵 Troco para: R$ ${Number(trocoPara).toFixed(2).replace(".", ",")}\n`;
+    }
+    mensagem += `\n`;
 
     mensagem += `🛒 Itens:\n`;
 
