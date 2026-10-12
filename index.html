@@ -804,7 +804,23 @@ function obterHorarioBrasilia() {
     const dias = {Sun:0, Mon:1, Tue:2, Wed:3, Thu:4, Fri:5, Sat:6};
     return { dia: dias[get('weekday')], minutos: Number(get('hour')) * 60 + Number(get('minute')) };
 }
+// ABERTURA MANUAL EXCEPCIONAL: mantém a loja aberta durante 12/10/2026.
+// A partir de 13/10/2026, o horário normal abaixo volta a valer automaticamente.
+const DATA_ABERTURA_MANUAL = '2026-10-12';
+const ABRIR_MANUALMENTE_NESTA_DATA = true;
+
+function obterDataBrasilia() {
+    const partes = new Intl.DateTimeFormat('en-CA', {
+        timeZone: 'America/Sao_Paulo', year: 'numeric', month: '2-digit', day: '2-digit'
+    }).formatToParts(new Date());
+    const get = tipo => partes.find(p => p.type === tipo)?.value;
+    return `${get('year')}-${get('month')}-${get('day')}`;
+}
+
 function lojaEstaAberta() {
+    // Exceção manual somente para a data configurada; não altera os outros dias.
+    if (ABRIR_MANUALMENTE_NESTA_DATA && obterDataBrasilia() === DATA_ABERTURA_MANUAL) return true;
+
     const {dia, minutos} = obterHorarioBrasilia();
     if (dia === 2) return false; // terça-feira
     if (dia === 0) return minutos >= 12*60 && minutos < 17*60;
@@ -817,7 +833,7 @@ function atualizarStatusLoja() {
     if (el) {
         el.className = 'status-loja ' + (aberta ? 'aberta' : 'fechada');
         el.innerHTML = aberta
-          ? '🟢 LOJA ABERTA <small>Estamos recebendo pedidos! Funcionamento conforme os horários abaixo.</small>'
+          ? '🟢 LOJA ABERTA <small>Estamos recebendo pedidos! Abertura manual especial de hoje.</small>'
           : '🔴 LOJA FECHADA <small>No momento não estamos recebendo pedidos. Confira nossos horários de funcionamento.</small>';
     }
     document.querySelectorAll('button').forEach(btn => {
@@ -1132,19 +1148,29 @@ extrasSelecionados.forEach(e => e.checked = false);
 }
     
   function atualizarFrete() {
-
     const select = document.getElementById("bairro");
+    if (!select) return;
 
-    if (select.value) {
-        frete = Number(select.value);
-        bairroSelecionado = select.options[select.selectedIndex].getAttribute("data-bairro");
+    const opcao = select.options[select.selectedIndex];
+
+    if (select.value !== "" && opcao) {
+        frete = Number(select.value) || 0;
+        bairroSelecionado = opcao.getAttribute("data-bairro") || opcao.textContent.trim();
     } else {
         frete = 0;
         bairroSelecionado = "";
     }
 
-    atualizarCarrinho(); // 🔥 ATUALIZA NA HORA
+    atualizarCarrinho();
 }
+
+document.addEventListener("DOMContentLoaded", function () {
+    const selectBairro = document.getElementById("bairro");
+    if (selectBairro) {
+        selectBairro.addEventListener("change", atualizarFrete);
+        atualizarFrete();
+    }
+});
 
 function adicionarAoCarrinho(nome, preco) {
     carrinho.push({ nome, preco });
@@ -1196,8 +1222,8 @@ function atualizarCarrinho() {
     let freteFinal = totalProdutos >= 55 ? 0 : frete;
     let totalFinal = totalProdutos + freteFinal;
 
-    document.getElementById("frete").innerText = freteFinal.toFixed(2);
-    document.getElementById("total").innerText = totalFinal.toFixed(2);
+    document.getElementById("frete").innerText = freteFinal.toFixed(2).replace(".", ",");
+    document.getElementById("total").innerText = totalFinal.toFixed(2).replace(".", ",");
 }
     
 function atualizarTotais() {
